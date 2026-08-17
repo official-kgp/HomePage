@@ -1,0 +1,13 @@
+name = "kgp-news-api"
+main = "src/index.ts"
+compatibility_date = "2026-08-17"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "kgp-news"
+database_id = "REPLACE_WITH_D1_DATABASE_ID"
+
+[vars]
+ALLOWED_ORIGIN = "https://www.kgp.suiten.site"
+PUBLIC_DISCORD_CLIENT_ID = "REPLACE_WITH_PUBLIC_DISCORD_CLIENT_ID"
+PUBLIC_DISCORD_REDIRECT_URI = "https://api.kgp.suiten.site/oauth/discord/callback"

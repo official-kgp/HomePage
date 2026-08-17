@@ -1,0 +1,6 @@
+<?php require __DIR__.'/../src/bootstrap.php';
+if(!hash_equals($_SESSION['oauth_state']??'',$_GET['state']??'')){http_response_code(403);exit('Invalid OAuth state');}
+$ch=curl_init('https://discord.com/api/oauth2/token');curl_setopt_array($ch,[CURLOPT_POST=>true,CURLOPT_POSTFIELDS=>http_build_query(['client_id'=>cfg('discord_client_id'),'client_secret'=>cfg('discord_client_secret'),'grant_type'=>'authorization_code','code'=>$_GET['code']??'','redirect_uri'=>cfg('discord_redirect_uri')]),CURLOPT_HTTPHEADER=>['Content-Type: application/x-www-form-urlencoded'],CURLOPT_RETURNTRANSFER=>true]);$token=json_decode((string)curl_exec($ch),true);curl_close($ch);if(empty($token['access_token']))exit('Discord OAuth failed');
+$ch=curl_init('https://discord.com/api/users/@me');curl_setopt_array($ch,[CURLOPT_HTTPHEADER=>['Authorization: Bearer '.$token['access_token']],CURLOPT_RETURNTRANSFER=>true]);$user=json_decode((string)curl_exec($ch),true);curl_close($ch);$id=(string)($user['id']??'');
+if(!$id||!in_array($id,cfg('discord_whitelist'),true)){http_response_code(403);exit('このDiscordアカウントは管理者ホワイトリストに登録されていません。');}
+session_regenerate_id(true);$_SESSION['admin']=['type'=>'discord','id'=>$id,'name'=>$user['global_name']??$user['username']??$id];$_SESSION['csrf']=bin2hex(random_bytes(32));header('Location: /dashboard.php');
