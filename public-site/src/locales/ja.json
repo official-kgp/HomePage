@@ -100,7 +100,10 @@
   },
   "footer": {
     "label": "KAZAMATAI COMMUNITY",
-    "note": "風真いろはさんを応援する、交流と企画を楽しむファンコミュニティ。",
+    "footerCatchphrase": "あなたの「好き」で、みんなの「居場所」を。",
+    "footerDescription1": "かざま隊の集いの場は、ホロライブ、holoXの「風真いろは」さんを応援するDiscordファンコミュニティです。",
+    "footerDescription2": "かざま隊の集いの場では、ファン同士が交流し合うことのできる居場所を作る取り組みをしています。",
+    "footerDescription3": "また、イベントや企画なども行われており、ファン同士で楽しむことができます。",
     "follow": "公式チャンネル",
     "rights": "All rights reserved."
   }

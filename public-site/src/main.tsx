@@ -6,6 +6,8 @@ import { ArticlePage } from './pages/article';
 import { ContactPage } from './pages/contact';
 import { HomePage } from './pages/home';
 import { NewsPage } from './pages/news';
+import { RulePage } from './pages/rule';
+import { PreviewPage } from './pages/preview';
 import { NotFoundPage } from './pages/notFound';
 import { ServerPage } from './pages/server';
 import './styles.css';
@@ -16,14 +18,18 @@ type Route =
   | { name: 'news' }
   | { name: 'article'; slug: string }
   | { name: 'contact' }
+  | { name: 'rule' }
+  | { name: 'preview' }
   | { name: 'notFound' };
 
 function resolveRoute(pathname: string): Route {
   const path = pathname.replace(/\/+$/, '') || '/';
-  if (path === '/' || path === '/site') return { name: 'home' };
+  if (path === '/') return { name: 'home' };
   if (path === '/server') return { name: 'server' };
   if (path === '/news') return { name: 'news' };
   if (path === '/contact') return { name: 'contact' };
+  if (path === '/rule') return { name: 'rule' };
+  if (path === '/preview') return { name: 'preview' };
 
   const articleMatch = path.match(/^\/news\/(.+)$/);
   if (articleMatch) {
@@ -55,15 +61,15 @@ function Header({ route, copy, language, onLanguageChange }: { route: Route; cop
   const [menuOpen, setMenuOpen] = useState(false);
   const [menuClosing, setMenuClosing] = useState(false);
   const links = [
-    { href: '/site/', label: copy.nav.home, active: route.name === 'home' },
+    { href: '/', label: copy.nav.home, active: route.name === 'home' },
     { href: '/server', label: copy.nav.server, active: route.name === 'server' },
     { href: '/news', label: copy.nav.news, active: route.name === 'news' || route.name === 'article' },
     { href: '/contact', label: copy.nav.contact, active: route.name === 'contact' },
   ];
 
   return <header className="site-header">
-    <a className="brand" href="/site/" aria-label={copy.siteName}>
-      <img src="/logo.png" alt="" />
+    <a className="brand" href="/" aria-label={copy.siteName}>
+      <img src="https://img.suiten.site/Image/kgp-logo.png" alt="" />
       <span>{copy.siteName}</span>
     </a>
     <button className={menuOpen ? 'menu-toggle is-open' : menuClosing ? 'menu-toggle is-closing' : 'menu-toggle'} type="button" aria-expanded={menuOpen} aria-controls="site-navigation" aria-label={menuOpen ? copy.common.menuClose : copy.common.menuOpen} onClick={() => {
@@ -88,17 +94,21 @@ function Header({ route, copy, language, onLanguageChange }: { route: Route; cop
 function Footer({ copy }: { copy: Copy }) {
   return <footer className="site-footer">
     <div className="footer-main">
-      <div><p className="eyebrow">{copy.footer.label}</p><h2>{copy.siteName}</h2><p>{copy.footer.note}</p></div>
+      <div><img src="https://img.suiten.site/Image/kgp-logo.png" alt="Server Logo" /><h2>{copy.siteName}</h2></div>
+      <div><p>{copy.footer.footerDescription1}</p><p>{copy.footer.footerDescription2}</p><p>{copy.footer.footerDescription3}</p></div>
       <div className="footer-contact"><span>{copy.common.contact}</span><a href={`mailto:${site.contact}`}>{site.contact}<span aria-hidden="true">↗</span></a></div>
     </div>
     <div className="footer-bottom">
-      <span>© 2025 - 2026 {copy.siteName}. {copy.footer.rights}</span>
+      
       <div className="social-links" aria-label={copy.footer.follow}>
         <a href="https://x.com/official_kgp" target="_blank" rel="noreferrer">X ↗</a>
+        <a href="https://instagram.com/kazamatai_gp" target="_blank" rel="noreferrer">Instagram ↗</a>
         <a href="https://www.youtube.com/@official_kgp" target="_blank" rel="noreferrer">YouTube ↗</a>
         <a href={site.inviteUrl} target="_blank" rel="noreferrer">Discord ↗</a>
         <a href="https://note.com/official_kgp" target="_blank" rel="noreferrer">note ↗</a>
       </div>
+      <span>© 2025 - 2026 {copy.siteName}. {copy.footer.rights}</span>
+
     </div>
   </footer>;
 }
@@ -129,6 +139,7 @@ function App() {
       case 'news': return <NewsPage copy={copy} language={language} />;
       case 'article': return <ArticlePage copy={copy} language={language} slug={route.slug} />;
       case 'contact': return <ContactPage copy={copy} contactEmail={site.contact} />;
+      case 'rule': return <RulePage copy={copy} />;
       case 'notFound': return <NotFoundPage copy={copy} />;
     }
   })();
