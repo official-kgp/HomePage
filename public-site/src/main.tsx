@@ -140,6 +140,7 @@ function App() {
       case 'article': return <ArticlePage copy={copy} language={language} slug={route.slug} />;
       case 'contact': return <ContactPage copy={copy} contactEmail={site.contact} />;
       case 'rule': return <RulePage copy={copy} />;
+      case 'preview': return <PreviewPage />;
       case 'notFound': return <NotFoundPage copy={copy} />;
     }
   })();
