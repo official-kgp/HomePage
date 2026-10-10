@@ -1,0 +1,45 @@
+{
+  "languageName": "Português (Brasil)",
+  "siteName": "Comunidade Kazamatai",
+  "tagline": "Bons momentos ao lado da Iroha.",
+  "nav": { "home": "Início", "server": "Comunidade", "news": "Novidades", "contact": "Contato", "language": "Escolher idioma" },
+  "home": {
+    "eyebrow": "KAZAMATAI COMMUNITY",
+    "heroCaption": "Iroha Kazama",
+    "heroStamp": "COMUNIDADE DE FÃS · DESDE 2022",
+    "title": "Bons momentos,\nao lado da Iroha.",
+    "intro": "Uma comunidade de fãs dedicada à Iroha Kazama, da 6ª geração da hololive.",
+    "description": "Converse, compartilhe o que você gosta e participe de eventos com outros fãs.",
+    "join": "Entre no Discord",
+    "newsLink": "Ver novidades",
+    "manifesto": "Um lugar para\ncompartilhar o que amamos.",
+    "featuresEyebrow": "COMUNIDADE EM CONJUNTO",
+    "featuresTitle": "Seu espaço na comunidade",
+    "features": [
+      { "title": "Conversa sem pressa", "body": "Bate-papo sobre lives, hobbies e coisas do dia a dia." },
+      { "title": "Diversão em grupo", "body": "Atividades e eventos para fãs curtirem juntos." },
+      { "title": "Fique por dentro", "body": "Avisos e informações sobre os próximos eventos." }
+    ],
+    "latestNews": "Da comunidade",
+    "latestEyebrow": "ÚLTIMAS NOVIDADES",
+    "allNews": "Todas as novidades"
+  },
+  "server": {
+    "eyebrow": "ABOUT THE COMMUNITY",
+    "title": "Conectados pelo\nque gostamos.",
+    "intro": "Um espaço acolhedor para a Kazamatai se encontrar, conversar e curtir a comunidade no próprio ritmo.",
+    "features": [
+      { "title": "Conversa aberta", "body": "Fale sobre lives, hobbies e assuntos do dia a dia quando quiser." },
+      { "title": "Eventos em grupo", "body": "Atividades sazonais e projetos para aproveitar juntos." },
+      { "title": "Um espaço acolhedor", "body": "Valorizamos o respeito e recebemos bem quem está chegando." }
+    ],
+    "join": "Participe da comunidade",
+    "joinEyebrow": "Esperamos encontrar você por lá",
+    "index": "02 — COMUNIDADE"
+  },
+  "news": { "eyebrow": "ÚLTIMAS NOVIDADES", "title": "Novidades", "index": "03 — NOTÍCIAS", "loading": "Carregando novidades…", "empty": "Ainda não há publicações.", "error": "Não foi possível carregar as novidades.", "read": "Ler publicação" },
+  "article": { "back": "Voltar às novidades", "loading": "Carregando publicação…", "missing": "Esta publicação não foi encontrada." },
+  "contact": { "eyebrow": "FALE COM A GENTE", "title": "Contato", "index": "05 — CONTATO", "description": "Tem dúvidas ou sugestões sobre a comunidade? Fale com a gente.", "email": "Enviar e-mail", "formName": "Seu nome", "formEmail": "E-mail", "formMessage": "Mensagem", "send": "Enviar mensagem" },
+  "common": { "skip": "Ir para o conteúdo", "mainNavigation": "Navegação principal", "menuOpen": "Abrir menu", "menuClose": "Fechar menu", "notFoundEyebrow": "404 — PÁGINA NÃO ENCONTRADA", "loading": "Carregando…", "notFound": "Página não encontrada", "notFoundDescription": "A página pode ter mudado de endereço ou não existir mais.", "backHome": "Voltar ao início", "contact": "Contato" },
+  "footer": { "label": "KAZAMATAI COMMUNITY", "note": "Uma comunidade de fãs da Iroha Kazama", "follow": "Canais oficiais", "rights": "Todos os direitos reservados." }
+}

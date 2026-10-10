@@ -1,0 +1,124 @@
+Suiten Site Source-Available License (SSSAL) v1.0.0
+
+Copyright © 2024 - 2026 Suiten
+
+Permission is hereby granted to any person obtaining a copy of this software and associated source code (the "Software") to use, copy, modify, and distribute the Software, subject to the following conditions.
+
+1. NON-COMMERCIAL USE
+
+The Software may be used solely for personal, educational, research, experimental, or other non-commercial purposes.
+
+Commercial use of the Software is strictly prohibited.
+
+For the purposes of this License, "Commercial Use" includes, but is not limited to:
+
+* Using the Software as part of a paid service or product;
+* Selling the Software or any substantial portion thereof;
+* Using the Software to directly or indirectly generate monetary revenue;
+* Incorporating the Software into a commercial website, application, product, or service;
+* Using the Software for advertising, marketing, or other commercial activities.
+
+The mere publication or distribution of the Software through platforms such as GitHub does not constitute Commercial Use, provided that the Software is not otherwise used for commercial purposes.
+
+2. NO SUBSTANTIAL SOURCE CODE REPRODUCTION
+
+The Software may not be reproduced, copied, or republished in whole or in substantial part as another project, website, application, service, template, or other work.
+
+In particular, the following are prohibited:
+
+* Copying substantially all of the source code into another project;
+* Making only minor modifications to the source code and presenting the resulting work as an independent project;
+* Reproducing a substantial portion of the Software while changing only filenames, variable names, comments, formatting, or other superficial elements;
+* Publishing a substantially copied version of the Software as one's own work.
+
+This restriction does not prohibit the independent implementation of similar functionality, algorithms, concepts, programming techniques, web standards, or general user interface patterns.
+
+3. MODIFICATION
+
+Modification of the Software is permitted for non-commercial purposes.
+
+When distributing a modified version of the Software, the distributor must clearly indicate:
+
+* That the Software has been modified;
+* That the original Software was created by Suiten; and
+* That the distributed work is not an official version of the original Software unless expressly authorized by Suiten.
+
+Modified versions remain subject to the restrictions on Commercial Use and substantial source code reproduction specified in this License.
+
+4. COPYRIGHT AND LICENSE NOTICES
+
+Copyright notices, license notices, and author attribution included in the Software must not be removed without authorization.
+
+Where technical limitations make it impractical to display such notices directly within a user interface, the notices may instead be retained in the source code, LICENSE file, NOTICE file, or another appropriate location.
+
+5. PROHIBITED USE
+
+The Software must not be used to facilitate, conduct, or intentionally support:
+
+* Harassment, trolling, malicious disruption, or abuse of others;
+* Unauthorized access to computer systems or networks;
+* Malware, ransomware, or other malicious software;
+* Fraud, phishing, impersonation, or other deceptive activities;
+* Criminal activity or other unlawful conduct;
+* Infringement of the rights of others; or
+* Any other activity prohibited by applicable law.
+
+This restriction applies both to the direct use of the Software and to services or systems operated using the Software.
+
+6. REDISTRIBUTION
+
+Redistribution of the Software is permitted for non-commercial purposes, provided that:
+
+1. A copy of this License, or a clear reference to this License, is included;
+
+2. All applicable copyright and author notices are retained;
+
+3. The non-commercial nature of the permitted use is clearly stated; and
+
+4. Any modified or redistributed version that is not officially provided or endorsed by Suiten is clearly identified as such.
+
+5. THIRD-PARTY COMPONENTS
+
+This License applies only to the original portions of the Software authored by Suiten.
+
+Third-party libraries, frameworks, fonts, images, icons, assets, code, and other materials included with or used by the Software remain subject to their respective licenses and copyright terms.
+
+Nothing in this License grants rights to third-party materials beyond the rights granted by their respective licenses.
+
+8. TERMINATION
+
+Any rights granted under this License automatically terminate upon violation of its terms.
+
+If the violation is discontinued and reasonably remedied, Suiten may, at their sole discretion, restore the rights granted under this License.
+
+Termination does not affect rights that were lawfully granted to recipients who are not responsible for the violation.
+
+9. NO WARRANTY
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, OR TITLE.
+
+IN NO EVENT SHALL Suiten OR THE COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE, TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW.
+
+10. RESERVATION OF RIGHTS
+
+Except for the rights expressly granted by this License, all rights are reserved by Suiten.
+
+This License does not grant permission to use the name, trademarks, logos, branding, or other intellectual property of Suiten except where such use is expressly permitted by applicable law.
+
+11. SEVERABILITY
+
+If any provision of this License is determined to be invalid, unenforceable, or otherwise inapplicable, the remaining provisions shall remain in full force and effect to the maximum extent permitted by applicable law.
+
+12. LICENSE STATUS
+
+Suiten Site Source-Available License (SSSAL) is a custom source-available license.
+
+SSSAL is NOT an OSI-approved Open Source License.
+
+The Software is made publicly available in source-code form, but the rights granted by this License are intentionally subject to restrictions on commercial use and substantial source-code reproduction.
+
+---
+
+Suiten Site Source-Available License (SSSAL) v1.0
+
+Copyright ©　2024 - 2026 Suiten

@@ -1,0 +1,45 @@
+{
+  "languageName": "한국어",
+  "siteName": "카자마타이 모임터",
+  "tagline": "이로하와 함께 즐거운 시간을.",
+  "nav": { "home": "홈", "server": "커뮤니티 소개", "news": "소식", "contact": "문의하기", "language": "언어 선택" },
+  "home": {
+    "eyebrow": "KAZAMATAI COMMUNITY",
+    "heroCaption": "카자마 이로하",
+    "heroStamp": "팬 커뮤니티 · 2022년부터",
+    "title": "이로하와 함께\n즐거운 시간을.",
+    "intro": "hololive 6기생 카자마 이로하를 응원하는 팬 커뮤니티입니다.",
+    "description": "함께 이야기하고, 좋아하는 것을 나누며, 커뮤니티 이벤트를 즐겨 보세요.",
+    "join": "Discord 참여하기",
+    "newsLink": "소식 보기",
+    "manifesto": "좋아하는 마음을\n함께 나누는 곳.",
+    "featuresEyebrow": "함께 만드는 커뮤니티",
+    "featuresTitle": "이곳에서 함께해요",
+    "features": [
+      { "title": "편안한 대화", "body": "방송 이야기부터 취미와 일상까지 자유롭게 나눠요." },
+      { "title": "함께 즐기는 행사", "body": "팬들이 함께 참여할 수 있는 커뮤니티 이벤트를 엽니다." },
+      { "title": "새로운 소식", "body": "공지와 이벤트 정보를 커뮤니티에서 확인할 수 있어요." }
+    ],
+    "latestNews": "커뮤니티 소식",
+    "latestEyebrow": "최신 소식",
+    "allNews": "전체 소식"
+  },
+  "server": {
+    "eyebrow": "ABOUT THE COMMUNITY",
+    "title": "좋아하는 마음으로\n이어지는 곳.",
+    "intro": "카자마타이가 편하게 모여 서로 교류할 수 있는 팬 커뮤니티를 만들어 갑니다.",
+    "features": [
+      { "title": "자유로운 교류", "body": "방송 감상과 취미 이야기를 각자의 속도로 나눠요." },
+      { "title": "함께하는 기획", "body": "계절 행사와 멤버들이 함께 즐길 수 있는 활동을 진행합니다." },
+      { "title": "안심할 수 있는 공간", "body": "서로를 존중하며 처음 온 사람도 편하게 참여할 수 있도록 합니다." }
+    ],
+    "join": "커뮤니티 참여하기",
+    "joinEyebrow": "커뮤니티에서 만나요",
+    "index": "02 — 커뮤니티"
+  },
+  "news": { "eyebrow": "최신 소식", "title": "소식", "index": "03 — 소식", "loading": "소식을 불러오는 중…", "empty": "아직 등록된 소식이 없습니다.", "error": "소식을 불러오지 못했습니다.", "read": "글 읽기" },
+  "article": { "back": "소식 목록으로", "loading": "글을 불러오는 중…", "missing": "글을 찾을 수 없습니다." },
+  "contact": { "eyebrow": "편하게 연락 주세요", "title": "문의하기", "index": "05 — 문의", "description": "커뮤니티에 관한 질문이나 의견을 보내 주세요.", "email": "이메일로 문의", "formName": "이름", "formEmail": "이메일 주소", "formMessage": "문의 내용", "send": "보내기" },
+  "common": { "skip": "본문으로 이동", "mainNavigation": "주요 메뉴", "menuOpen": "메뉴 열기", "menuClose": "메뉴 닫기", "notFoundEyebrow": "404 — 페이지를 찾을 수 없습니다", "loading": "불러오는 중…", "notFound": "페이지를 찾을 수 없습니다", "notFoundDescription": "페이지가 이동되었거나 더 이상 존재하지 않을 수 있습니다.", "backHome": "홈으로 돌아가기", "contact": "문의하기" },
+  "footer": { "label": "KAZAMATAI COMMUNITY", "note": "카자마 이로하를 응원하는 팬 커뮤니티", "follow": "공식 채널", "rights": "All rights reserved." }
+}

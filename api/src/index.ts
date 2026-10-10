@@ -8,15 +8,26 @@ export interface Env {
   SESSION_SECRET: string;
 }
 
-const json = (data: unknown, status = 200, origin = "*") =>
+function allowedOrigin(request: Request, env: Env): string {
+  const requestOrigin = request.headers.get("Origin");
+  return requestOrigin === env.ALLOWED_ORIGIN ? requestOrigin : env.ALLOWED_ORIGIN;
+}
+
+function corsHeaders(origin: string): HeadersInit {
+  return {
+    "access-control-allow-origin": origin,
+    "access-control-allow-headers": "Content-Type, X-Admin-Key",
+    "access-control-allow-methods": "GET,POST,PUT,DELETE,OPTIONS",
+  };
+}
+
+const json = (data: unknown, status = 200, origin: string) =>
   new Response(JSON.stringify(data), {
     status,
     headers: {
       "content-type": "application/json; charset=utf-8",
-      "access-control-allow-origin": origin,
-      "access-control-allow-headers": "Content-Type, X-Admin-Key",
-      "access-control-allow-methods": "GET,POST,PUT,DELETE,OPTIONS",
       "cache-control": "no-store",
+      ...corsHeaders(origin),
     },
   });
 
@@ -57,13 +68,11 @@ function authorized(request: Request, env: Env) {
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
-    const origin = request.headers.get("Origin") || env.ALLOWED_ORIGIN;
+    const origin = allowedOrigin(request, env);
 
-    if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: {
-      "access-control-allow-origin": env.ALLOWED_ORIGIN,
-      "access-control-allow-headers": "Content-Type, X-Admin-Key",
-      "access-control-allow-methods": "GET,POST,PUT,DELETE,OPTIONS",
-    }});
+    if (request.method === "OPTIONS") {
+      return new Response(null, { status: 204, headers: corsHeaders(origin) });
+    }
 
     if (url.pathname === "/health") return json({ ok: true }, 200, origin);
 

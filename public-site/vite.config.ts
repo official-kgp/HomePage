@@ -1,2 +1,10 @@
 import { defineConfig } from 'vite';
-export default defineConfig({});
+import react from '@vitejs/plugin-react';
+
+export default defineConfig({
+	plugins: [react()],
+	publicDir: '../img',
+	preview: {
+		allowedHosts: ['kgp.suiten.site'],
+	},
+});

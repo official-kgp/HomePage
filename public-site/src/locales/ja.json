@@ -1,0 +1,45 @@
+{
+  "languageName": "日本語",
+  "siteName": "かざま隊の集いの場",
+  "tagline": "あなたの「好き」で、みんなの「居場所」を。",
+  "nav": { "home": "ホーム", "server": "サーバーについて", "news": "ニュース", "contact": "お問い合わせ", "language": "言語を選択" },
+  "home": {
+    "eyebrow": "KAZAMATAI COMMUNITY",
+    "heroCaption": "風真いろはさん",
+    "heroStamp": "FAN COMMUNITY · SINCE 2025",
+    "title": "あなたの「好き」で、\nみんなの「居場所」を。",
+    "intro": "ホロライブ6期生「風真いろは」さんを応援するファンコミュニティです。",
+    "description": "雑談や情報共有、イベントを通して、好きなものを好きな人たちと。",
+    "join": "Discordに参加する",
+    "newsLink": "ニュースを見る",
+    "manifesto": "好きな気持ちを、\nここで分かち合おう。",
+    "featuresEyebrow": "ともに楽しむ",
+    "featuresTitle": "この場所でできること",
+    "features": [
+      { "title": "気軽に話せる", "body": "日々の雑談から、好きな配信や趣味の話まで。" },
+      { "title": "一緒に楽しむ", "body": "ファン同士で参加できる交流やコミュニティ企画。" },
+      { "title": "新しい情報", "body": "お知らせやイベント情報をコミュニティで共有。" }
+    ],
+    "latestNews": "コミュニティのお知らせ",
+    "latestEyebrow": "LATEST UPDATES",
+    "allNews": "すべてのニュース"
+  },
+  "server": {
+    "eyebrow": "ABOUT THE COMMUNITY",
+    "title": "好きな気持ちで、\nつながる場所。",
+    "intro": "かざま隊が安心して集まり、交流できるファンコミュニティを目指しています。",
+    "features": [
+      { "title": "自由な交流", "body": "雑談、配信の感想、趣味のこと。自分のペースで参加できます。" },
+      { "title": "みんなの企画", "body": "季節のイベントや、メンバーと一緒に楽しむ企画を開催します。" },
+      { "title": "安心できる環境", "body": "お互いを尊重し、初めての方も参加しやすい場づくりを大切にします。" }
+    ],
+    "join": "コミュニティに参加する",
+    "joinEyebrow": "コミュニティでお会いしましょう",
+    "index": "02 — コミュニティ"
+  },
+  "news": { "eyebrow": "最新のお知らせ", "title": "ニュース", "index": "03 — ニュース", "loading": "ニュースを読み込み中…", "empty": "現在ニュースはありません。", "error": "ニュースを取得できませんでした。", "read": "記事を読む" },
+  "article": { "back": "ニュース一覧へ", "loading": "記事を読み込み中…", "missing": "記事が見つかりませんでした。" },
+  "contact": { "eyebrow": "お気軽にどうぞ", "title": "お問い合わせ", "index": "05 — CONTACT", "description": "コミュニティについてのお問い合わせやご意見はこちらからお寄せください。", "email": "メールでお問い合わせ", "formName": "お名前", "formEmail": "メールアドレス", "formMessage": "お問い合わせ内容", "send": "送信する" },
+  "common": { "skip": "本文へ移動", "mainNavigation": "メインナビゲーション", "menuOpen": "メニューを開く", "menuClose": "メニューを閉じる", "notFoundEyebrow": "404 — ページが見つかりません", "loading": "読み込み中…", "notFound": "ページが見つかりません", "notFoundDescription": "お探しのページは移動したか、存在しない可能性があります。", "backHome": "ホームへ戻る", "contact": "お問い合わせ" },
+  "footer": { "label": "KAZAMATAI COMMUNITY", "note": "風真いろはさんを応援するファンコミュニティ", "follow": "公式チャンネル", "rights": "All rights reserved." }
+}

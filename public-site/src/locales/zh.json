@@ -1,0 +1,45 @@
+{
+  "languageName": "简体中文",
+  "siteName": "风真队的聚会空间",
+  "tagline": "与风真一起，创造美好时光。",
+  "nav": { "home": "首页", "server": "关于社群", "news": "新闻", "contact": "联系我们", "language": "选择语言" },
+  "home": {
+    "eyebrow": "KAZAMATAI COMMUNITY",
+    "heroCaption": "风真伊吕波",
+    "heroStamp": "粉丝社群 · 2022年起",
+    "title": "与风真一起，\n创造美好时光。",
+    "intro": "这是一个支持 hololive 六期生风真伊吕波的粉丝社群。",
+    "description": "在这里聊天、分享喜爱的内容，并与其他粉丝一起参加活动。",
+    "join": "加入 Discord",
+    "newsLink": "浏览新闻",
+    "manifesto": "把喜欢的心情，\n分享给大家。",
+    "featuresEyebrow": "一起参与社群",
+    "featuresTitle": "在这里可以做什么",
+    "features": [
+      { "title": "轻松交流", "body": "聊聊直播、兴趣爱好，或分享日常生活。" },
+      { "title": "一起参加活动", "body": "与粉丝伙伴共同参与社群活动与企划。" },
+      { "title": "获取最新消息", "body": "在社群中分享公告与活动资讯。" }
+    ],
+    "latestNews": "社群动态",
+    "latestEyebrow": "最新动态",
+    "allNews": "查看全部新闻"
+  },
+  "server": {
+    "eyebrow": "ABOUT THE COMMUNITY",
+    "title": "因为喜欢，\n所以相聚。",
+    "intro": "为风真队打造一个可以安心相聚、自在交流的粉丝社群。",
+    "features": [
+      { "title": "自在交流", "body": "聊直播、聊兴趣，按照自己的节奏参与社群。" },
+      { "title": "共同企划", "body": "举办季节活动与大家可以一起参与的社群企划。" },
+      { "title": "友善环境", "body": "彼此尊重，让第一次加入的成员也能轻松融入。" }
+    ],
+    "join": "加入社群",
+    "joinEyebrow": "期待在社群与你相遇",
+    "index": "02 — 社群"
+  },
+  "news": { "eyebrow": "最新动态", "title": "新闻", "index": "03 — 新闻", "loading": "正在加载新闻…", "empty": "目前还没有新闻。", "error": "无法获取新闻。", "read": "阅读文章" },
+  "article": { "back": "返回新闻列表", "loading": "正在加载文章…", "missing": "找不到这篇文章。" },
+  "contact": { "eyebrow": "欢迎联系", "title": "联系我们", "index": "05 — 联系", "description": "如有社群相关的问题或建议，欢迎发送消息。", "email": "发送电子邮件", "formName": "姓名", "formEmail": "电子邮箱", "formMessage": "留言内容", "send": "发送" },
+  "common": { "skip": "跳到正文", "mainNavigation": "主导航", "menuOpen": "打开菜单", "menuClose": "关闭菜单", "notFoundEyebrow": "404 — 页面不存在", "loading": "加载中…", "notFound": "页面不存在", "notFoundDescription": "页面可能已移动或不再提供。", "backHome": "返回首页", "contact": "联系我们" },
+  "footer": { "label": "KAZAMATAI COMMUNITY", "note": "支持风真伊吕波的粉丝社群", "follow": "官方频道", "rights": "保留所有权利。" }
+}

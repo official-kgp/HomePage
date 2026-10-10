@@ -1,0 +1,12 @@
+.env
+ci/
+ci/**
+venv/
+venv/**
+node_modules/
+node_modules/**
+public-site/node_modules/
+public-site/dist/
+public-site/.env
+public-site/.env.*
+!public-site/.env.example
