@@ -96,6 +96,7 @@ function Footer({ copy }: { copy: Copy }) {
       <div className="social-links" aria-label={copy.footer.follow}>
         <a href="https://x.com/official_kgp" target="_blank" rel="noreferrer">X ↗</a>
         <a href="https://www.youtube.com/@official_kgp" target="_blank" rel="noreferrer">YouTube ↗</a>
+        <a href={site.inviteUrl} target="_blank" rel="noreferrer">Discord ↗</a>
         <a href="https://note.com/official_kgp" target="_blank" rel="noreferrer">note ↗</a>
       </div>
     </div>
