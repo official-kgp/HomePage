@@ -128,7 +128,7 @@ function App() {
   useEffect(() => {
     localStorage.setItem('kgp-language', language);
     document.documentElement.lang = language;
-    const pageTitle = route.name === 'home' ? copy.siteName : route.name === 'server' ? copy.nav.server : route.name === 'news' || route.name === 'article' ? copy.nav.news : route.name === 'contact' ? copy.nav.contact : copy.common.notFound;
+    const pageTitle = route.name === 'home' ? copy.siteName : route.name === 'server' ? copy.nav.server : route.name === 'news' || route.name === 'article' ? copy.nav.news : route.name === 'contact' ? copy.nav.contact : route.name === 'preview' ? 'プレビュー認証' : copy.common.notFound;
     document.title = `${pageTitle} | ${copy.siteName}`;
   }, [copy, language, route.name]);
 
