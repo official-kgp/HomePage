@@ -65,8 +65,8 @@ function Header({ route, copy, language, onLanguageChange }: { route: Route; cop
       <img src="/logo.png" alt="" />
       <span>{copy.siteName}</span>
     </a>
-    <button className="menu-toggle" type="button" aria-expanded={menuOpen} aria-controls="site-navigation" aria-label={menuOpen ? copy.common.menuClose : copy.common.menuOpen} onClick={() => setMenuOpen((open) => !open)}>
-      <span /><span />
+    <button className={menuOpen ? 'menu-toggle is-open' : 'menu-toggle'} type="button" aria-expanded={menuOpen} aria-controls="site-navigation" aria-label={menuOpen ? copy.common.menuClose : copy.common.menuOpen} onClick={() => setMenuOpen((open) => !open)}>
+      <span /><span /><span />
     </button>
     <nav className={menuOpen ? 'site-navigation is-open' : 'site-navigation'} id="site-navigation" aria-label={copy.common.mainNavigation}>
       {links.map((link) => <a className={link.active ? 'nav-link is-active' : 'nav-link'} href={link.href} key={link.href} onClick={() => setMenuOpen(false)}>{link.label}</a>)}
