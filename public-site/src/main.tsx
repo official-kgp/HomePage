@@ -53,6 +53,7 @@ function LanguagePicker({ language, copy, onChange }: { language: Language; copy
 
 function Header({ route, copy, language, onLanguageChange }: { route: Route; copy: Copy; language: Language; onLanguageChange: (next: Language) => void }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [menuClosing, setMenuClosing] = useState(false);
   const links = [
     { href: '/site/', label: copy.nav.home, active: route.name === 'home' },
     { href: '/server', label: copy.nav.server, active: route.name === 'server' },
@@ -65,7 +66,16 @@ function Header({ route, copy, language, onLanguageChange }: { route: Route; cop
       <img src="/logo.png" alt="" />
       <span>{copy.siteName}</span>
     </a>
-    <button className={menuOpen ? 'menu-toggle is-open' : 'menu-toggle'} type="button" aria-expanded={menuOpen} aria-controls="site-navigation" aria-label={menuOpen ? copy.common.menuClose : copy.common.menuOpen} onClick={() => setMenuOpen((open) => !open)}>
+    <button className={menuOpen ? 'menu-toggle is-open' : menuClosing ? 'menu-toggle is-closing' : 'menu-toggle'} type="button" aria-expanded={menuOpen} aria-controls="site-navigation" aria-label={menuOpen ? copy.common.menuClose : copy.common.menuOpen} onClick={() => {
+      if (menuOpen) {
+        setMenuOpen(false);
+        setMenuClosing(true);
+        window.setTimeout(() => setMenuClosing(false), 680);
+      } else {
+        setMenuClosing(false);
+        setMenuOpen(true);
+      }
+    }}>
       <span /><span /><span />
     </button>
     <nav className={menuOpen ? 'site-navigation is-open' : 'site-navigation'} id="site-navigation" aria-label={copy.common.mainNavigation}>
