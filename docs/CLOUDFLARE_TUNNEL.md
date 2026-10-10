@@ -81,3 +81,24 @@ systemctl --user restart kgp-site-preview.service
 ## 管理Discord OAuth
 
 管理画面のRedirect URIは `https://op-kgp.suiten.site/discord-callback.php` です。Discord Developer PortalにもこのURLを登録してください。APIの公開ニュースURLは `https://kgp-api.suiten.site` のままです。
+
+## KGPサイトのプレビュー認証ゲート（ローカルorigin）
+
+Vite Previewだけではサーバー側でCookieを検証してComing Soonと本サイトを切り替えられません。認証ゲートを使う場合は public-site/server/preview-gate.mjs をoriginとして起動します。Cloudflare Tunnelは引き続き http://127.0.0.1:4173 へ接続できます。
+
+1. 既存のComing Soon HTMLを、Web公開ルート外のローカルファイルへ配置します（例：/home/user/site/kgp-coming-soon.html）。
+2. public-site で npm run build を実行します。
+3. kgp-site-preview.service の起動コマンドを npm run serve:preview に変更し、以下の環境変数をsystemdのEnvironmentFileなどで設定します。
+
+```ini
+HOST=127.0.0.1
+PORT=4173
+KGP_DIST_DIR=/home/user/site/kgp-site/public-site/dist
+KGP_COMING_SOON_FILE=/home/user/site/kgp-coming-soon.html
+PREVIEW_PASSWORD=<長く推測困難なプレビュー用パスワード>
+PREVIEW_COOKIE_SECRET=<openssl rand -hex 32 で生成した値>
+```
+
+PREVIEW_PASSWORD と PREVIEW_COOKIE_SECRET はリポジトリに保存しないでください。環境変数は適切に保護します。設定後、サービスを再起動し、/preview/ で認証してから / に遷移できること、未認証の別ブラウザではComing Soonが表示されることを確認してください。
+
+このoriginは静的アセットを公開し、アプリのHTMLルートをCookieで保護します。公開ニュースAPIなど別ホストのAPI自体を認証するものではありません。Cloudflare Tunnelはlocalhostのままなので、ルーター側のポート開放は不要です。
