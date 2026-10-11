@@ -86,15 +86,14 @@ systemctl --user restart kgp-site-preview.service
 
 Vite Previewだけではサーバー側でCookieを検証してComing Soonと本サイトを切り替えられません。認証ゲートを使う場合は public-site/server/preview-gate.mjs をoriginとして起動します。Cloudflare Tunnelは引き続き http://127.0.0.1:4173 へ接続できます。
 
-1. 既存のComing Soon HTMLを、Web公開ルート外のローカルファイルへ配置します（例：/home/user/site/kgp-coming-soon.html）。
+1. Coming Soonページは `public-site/coming-soon.html` に含まれています。デフォルトではこのファイルを使います。独自のページを使う場合のみ、Web公開ルート外のファイルを `KGP_COMING_SOON_FILE` で指定してください。
 2. public-site で npm run build を実行します。
-3. kgp-site-preview.service の WorkingDirectory を `/home/user/site/kgp-site/public-site` にし、起動コマンドを `npm run serve:preview` に変更します。このスクリプトは `../ci/.env` を明示的に読み込みます（Node.jsの `--env-file` を使用）。`.env` のパスはWorkingDirectory基準なので、`/home/user/site/kgp-site/ci/.env` に配置してください。EnvironmentFileをsystemd側で設定する構成でも構いません。以下の環境変数を設定します。
+3. kgp-site-preview.service の WorkingDirectory を `/home/user/site/kgp-site/public-site` にし、起動コマンドを `npm run serve:preview` に変更します。このスクリプトは `server/preview-gate.mjs` から相対的に `../../ci/.env` を読み込みます。Node.js 18でも動作するようスクリプト内で読み込み、systemdから渡された環境変数は優先します。`.env` は `/home/user/site/kgp-site/ci/.env` に配置してください。以下の環境変数を設定します。
 
 ```ini
 HOST=127.0.0.1
 PORT=4173
 KGP_DIST_DIR=/home/user/site/kgp-site/public-site/dist
-KGP_COMING_SOON_FILE=/home/user/site/kgp-coming-soon.html
 PREVIEW_PASSWORD=<長く推測困難なプレビュー用パスワード>
 PREVIEW_COOKIE_SECRET=<openssl rand -hex 32 で生成した値>
 ```
