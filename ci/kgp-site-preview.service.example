@@ -1,17 +1,20 @@
 [Unit]
 Description=KGP website preview gate
-After=network.target
+After=network-online.target
 
 [Service]
 Type=simple
 WorkingDirectory=/home/user/site/kgp-site/public-site
-ExecStart=/usr/bin/npm run serve:preview
-Restart=always
-RestartSec=3
+Environment=NODE_ENV=production
+Environment=PATH=/home/user/.nvm/versions/node/v24.19.0/bin:/usr/local/bin:/usr/bin:/bin
 Environment=HOST=127.0.0.1
 Environment=PORT=4173
 Environment=KGP_DIST_DIR=/home/user/site/kgp-site/public-site/dist
-# PREVIEW_PASSWORD and PREVIEW_COOKIE_SECRET are loaded from ../ci/.env by the app.
+ExecStart=/home/user/.nvm/versions/node/v24.19.0/bin/node server/preview-gate.mjs
+Restart=on-failure
+RestartSec=3
+
+# PREVIEW_PASSWORD and PREVIEW_COOKIE_SECRET are loaded from ../../ci/.env by the app.
 # Do not place secrets in this unit file or commit them to GitHub.
 
 [Install]
