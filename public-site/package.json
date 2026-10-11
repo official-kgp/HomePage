@@ -6,7 +6,7 @@
     "dev": "vite",
     "build": "vite build",
     "typecheck": "tsc --noEmit",
-    "serve:preview": "node --env-file=../ci/.env server/preview-gate.mjs"
+    "serve:preview": "node server/preview-gate.mjs"
   },
   "dependencies": {
     "dompurify": "^3.2.6",
