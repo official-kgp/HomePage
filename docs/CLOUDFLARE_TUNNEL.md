@@ -88,7 +88,7 @@ Vite Previewだけではサーバー側でCookieを検証してComing Soonと本
 
 1. 既存のComing Soon HTMLを、Web公開ルート外のローカルファイルへ配置します（例：/home/user/site/kgp-coming-soon.html）。
 2. public-site で npm run build を実行します。
-3. kgp-site-preview.service の起動コマンドを npm run serve:preview に変更し、以下の環境変数をsystemdのEnvironmentFileなどで設定します。
+3. kgp-site-preview.service の WorkingDirectory を `/home/user/site/kgp-site/public-site` にし、起動コマンドを `npm run serve:preview` に変更します。このスクリプトは `../ci/.env` を明示的に読み込みます（Node.jsの `--env-file` を使用）。`.env` のパスはWorkingDirectory基準なので、`/home/user/site/kgp-site/ci/.env` に配置してください。EnvironmentFileをsystemd側で設定する構成でも構いません。以下の環境変数を設定します。
 
 ```ini
 HOST=127.0.0.1
@@ -99,6 +99,6 @@ PREVIEW_PASSWORD=<長く推測困難なプレビュー用パスワード>
 PREVIEW_COOKIE_SECRET=<openssl rand -hex 32 で生成した値>
 ```
 
-PREVIEW_PASSWORD と PREVIEW_COOKIE_SECRET はリポジトリに保存しないでください。環境変数は適切に保護します。設定後、サービスを再起動し、/preview/ で認証してから / に遷移できること、未認証の別ブラウザではComing Soonが表示されることを確認してください。
+PREVIEW_PASSWORD と PREVIEW_COOKIE_SECRET はリポジトリに保存しないでください。環境変数は適切に保護します。設定後、`npm run build` を実行してからサービスを再起動します。`/preview/` で認証して `/` に遷移できること、認証済みで `/preview/` を開くと認証解除ボタンが出ること、解除後と未認証の別ブラウザでは `/` や `/news` を含むすべてのHTMLページでComing Soonが表示されることを確認してください。`/__preview/status` は認証状態確認用、`/__preview/logout` は認証解除用です。パスワードが拒否される場合は、サービスログに環境変数不足の起動エラーがないことと、`.env` の `PREVIEW_PASSWORD` が入力値と完全一致することを確認してください。
 
 このoriginは静的アセットを公開し、アプリのHTMLルートをCookieで保護します。公開ニュースAPIなど別ホストのAPI自体を認証するものではありません。Cloudflare Tunnelはlocalhostのままなので、ルーター側のポート開放は不要です。
