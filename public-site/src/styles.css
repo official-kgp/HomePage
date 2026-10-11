@@ -148,6 +148,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .site-footer { padding: 58px 8% 22px; background: var(--ink); color: var(--white); }
 .footer-main { display: flex; justify-content: space-between; gap: 32px; padding-bottom: 50px; }
 .footer-main .eyebrow { color: #b3c4bc; }
+.footer-main > div:first-child { display: flex; align-items: center; gap: 12px; }
+.footer-main .logo { flex: 0 0 40px; }
 .footer-main h2 { margin: 0; font-family: var(--display); font-size: 28px; font-weight: 600; }
 .footer-main p:not(.eyebrow) { margin: 8px 0 0; color: #c4d1ca; font-size: 12px; }
 .footer-contact { display: flex; min-width: min(300px, 42%); flex-direction: column; justify-content: end; gap: 7px; }
