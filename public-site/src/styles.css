@@ -35,6 +35,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .site-header { position: sticky; z-index: 30; top: 0; display: flex; align-items: center; justify-content: space-between; min-height: 82px; padding: 0 6.2%; background: rgb(244 245 239 / 95%); border-bottom: 1px solid var(--line); backdrop-filter: blur(14px); }
 .brand { display: inline-flex; align-items: center; gap: 12px; max-width: 38%; color: var(--ink); text-decoration: none; font-size: 14px; font-weight: 700; line-height: 1.35; }
 .brand img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; }
+.logo { width: 40px; height: 40px; object-fit: contain; border-radius: 60%; }
 .brand span { max-width: 220px; }
 .site-navigation { display: flex; align-items: center; gap: clamp(18px, 2.5vw, 38px); }
 .nav-link { position: relative; padding: 8px 0; color: #52615c; text-decoration: none; font-size: 13px; white-space: nowrap; }
@@ -238,7 +239,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .news-entry { min-height: 108px; grid-template-columns: 30px minmax(0, 1fr) 20px; gap: 10px; }
   .news-entry time { display: none; }
   .news-entry-main strong { font-size: 16px; }
-  .news-entry-main > span { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2; font-size: 11px; }
+  .news-entry-main > span { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; line-clamp: 3; -webkit-line-clamp: 2; font-size: 11px; }
   .article-page { padding: 30px 7% 70px; }
   .article-heading { padding: 38px 0 25px; }
   .article-heading h1 { font-size: 30px; }

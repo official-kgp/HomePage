@@ -6,7 +6,7 @@ import { ArticlePage } from './pages/article';
 import { ContactPage } from './pages/contact';
 import { HomePage } from './pages/home';
 import { NewsPage } from './pages/news';
-import { RulePage } from './pages/rule';
+import  RulePage  from './pages/rule';
 import { PreviewPage } from './pages/preview';
 import { NotFoundPage } from './pages/notFound';
 import { ServerPage } from './pages/server';
@@ -94,7 +94,7 @@ function Header({ route, copy, language, onLanguageChange }: { route: Route; cop
 function Footer({ copy }: { copy: Copy }) {
   return <footer className="site-footer">
     <div className="footer-main">
-      <div><img src="https://img.suiten.site/Image/kgp-logo.png" alt="Server Logo" /><h2>{copy.siteName}</h2></div>
+      <div><img className="logo" src="https://img.suiten.site/Image/kgp-logo.png" alt="Server Logo" /><h2>{copy.siteName}</h2></div>
       <div><p>{copy.footer.footerDescription1}</p><p>{copy.footer.footerDescription2}</p><p>{copy.footer.footerDescription3}</p></div>
       <div className="footer-contact"><span>{copy.common.contact}</span><a href={`mailto:${site.contact}`}>{site.contact}<span aria-hidden="true">↗</span></a></div>
     </div>
@@ -139,7 +139,6 @@ function App() {
       case 'news': return <NewsPage copy={copy} language={language} />;
       case 'article': return <ArticlePage copy={copy} language={language} slug={route.slug} />;
       case 'contact': return <ContactPage copy={copy} contactEmail={site.contact} />;
-      case 'rule': return <RulePage copy={copy} />;
       case 'preview': return <PreviewPage />;
       case 'notFound': return <NotFoundPage copy={copy} />;
     }
