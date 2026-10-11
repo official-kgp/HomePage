@@ -1,12 +1,33 @@
 import { createHmac, timingSafeEqual } from 'node:crypto';
 import { createReadStream, existsSync, readFileSync, statSync } from 'node:fs';
 import { createServer } from 'node:http';
-import { extname, join, normalize, resolve, sep } from 'node:path';
+import { dirname, extname, join, normalize, resolve, sep } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+// Node 18-compatible .env loading. Environment variables already provided by
+// systemd take precedence over values in ../ci/.env.
+const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
+const ENV_FILE = resolve(SCRIPT_DIR, '../../ci/.env');
+if (existsSync(ENV_FILE)) {
+  const envText = readFileSync(ENV_FILE, 'utf8').replace(/^\\uFEFF/, '');
+  for (const line of envText.split(/\\r?\\n/)) {
+    const match = line.match(/^\\s*(?:export\\s+)?([A-Za-z_][A-Za-z0-9_]*)\\s*=\\s*(.*?)\\s*$/);
+    if (!match || process.env[match[1]] !== undefined) continue;
+    let value = match[2];
+    if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
+      value = value.slice(1, -1);
+      if (match[2].startsWith('"')) value = value.replace(/\\\\n/g, '\\n').replace(/\\\\r/g, '\\r');
+    } else {
+      value = value.replace(/\\s+#.*$/, '');
+    }
+    process.env[match[1]] = value;
+  }
+}
 
 const HOST = process.env.HOST || '127.0.0.1';
 const PORT = Number(process.env.PORT || 4173);
 const DIST_DIR = resolve(process.env.KGP_DIST_DIR || './dist');
-const COMING_SOON_FILE = resolve(process.env.KGP_COMING_SOON_FILE || './coming-soon.html');
+const COMING_SOON_FILE = resolve(process.env.KGP_COMING_SOON_FILE || join(SCRIPT_DIR, '../coming-soon.html'));
 const PREVIEW_PASSWORD = process.env.PREVIEW_PASSWORD || '';
 const PREVIEW_COOKIE_SECRET = process.env.PREVIEW_COOKIE_SECRET || '';
 const COOKIE_NAME = '__Host-kgp_preview';
