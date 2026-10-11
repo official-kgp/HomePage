@@ -32,7 +32,7 @@ function validCookie(req) {
   const token = cookieHeader.match(new RegExp('(?:^|;\\s*)' + COOKIE_NAME + '=([^;]+)'))?.[1];
   if (!token) return false;
   const parts = token.split('.');
-  if (parts.length !== 2 || !/^\d+$/.test(parts[0])) return false;
+  if (parts.length !== 2 || !/^\\d+$/.test(parts[0])) return false;
   const [expiry, signature] = parts;
   if (Number(expiry) <= Math.floor(Date.now() / 1000)) return false;
   const expected = Buffer.from(sign(expiry));
@@ -61,11 +61,11 @@ function readJson(req) {
 }
 function serveStatic(pathname, res) {
   let relative;
-  try { relative = decodeURIComponent(pathname).replace(/^\/+/, ''); } catch { return false; }
+  try { relative = decodeURIComponent(pathname).replace(/^\\/+/, ''); } catch { return false; }
   const filePath = normalize(join(DIST_DIR, relative));
   if (!filePath.startsWith(DIST_DIR + sep) || !existsSync(filePath) || !statSync(filePath).isFile()) return false;
   const types = { '.js':'text/javascript; charset=utf-8', '.css':'text/css; charset=utf-8', '.svg':'image/svg+xml', '.png':'image/png', '.jpg':'image/jpeg', '.jpeg':'image/jpeg', '.webp':'image/webp', '.ico':'image/x-icon', '.woff':'font/woff', '.woff2':'font/woff2', '.json':'application/json; charset=utf-8' };
-  res.writeHead(200, { 'Content-Type': types[extname(filePath)] || 'application/octet-stream', 'Cache-Control': /\.[a-f0-9]{8,}\./i.test(filePath) ? 'public, max-age=31536000, immutable' : 'public, max-age=300', 'X-Content-Type-Options':'nosniff' });
+  res.writeHead(200, { 'Content-Type': types[extname(filePath)] || 'application/octet-stream', 'Cache-Control': /\\.[a-f0-9]{8,}\\./i.test(filePath) ? 'public, max-age=31536000, immutable' : 'public, max-age=300', 'X-Content-Type-Options':'nosniff' });
   createReadStream(filePath).pipe(res);
   return true;
 }
@@ -74,6 +74,14 @@ createServer(async (req, res) => {
   const url = new URL(req.url || '/', 'http://localhost');
   const pathname = url.pathname;
 
+  if (pathname === '/__preview/status' && req.method === 'GET') {
+    return send(res, validCookie(req) ? 204 : 401, '');
+  }
+  if (pathname === '/__preview/logout' && req.method === 'POST') {
+    return send(res, 200, JSON.stringify({ ok: true }), 'application/json; charset=utf-8', {
+      'Set-Cookie': COOKIE_NAME + '=; Path=/; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:00 GMT; HttpOnly; Secure; SameSite=Lax',
+    });
+  }
   if (pathname === '/__preview/auth' && req.method === 'POST') {
     const ip = req.headers['cf-connecting-ip'] || req.socket.remoteAddress || 'unknown';
     const now = Date.now();
@@ -95,17 +103,21 @@ createServer(async (req, res) => {
       'Set-Cookie': COOKIE_NAME + '=' + token + '; Path=/; Max-Age=' + COOKIE_MAX_AGE + '; HttpOnly; Secure; SameSite=Lax',
     });
   }
-  if (pathname === '/__preview/auth') {
-    res.setHeader('Allow', 'POST');
-    return send(res, 405, 'Method Not Allowed');
+  if (pathname.startsWith('/__preview/')) {
+    res.setHeader('Allow', 'GET, POST');
+    return send(res, 404, 'Not Found');
   }
-  if (pathname.startsWith('/__preview/')) return send(res, 404, 'Not Found');
 
+  // Vite assets must load for both the Coming Soon page and the /preview form.
   if (pathname.startsWith('/assets/') || pathname === '/favicon.ico' || pathname === '/logo.png') {
     if (serveStatic(pathname, res)) return;
   }
 
+  // The only public HTML route is /preview. Every other path, including /news
+  // and unknown routes, is gated before the SPA is served.
   const isPreviewRoute = pathname === '/preview' || pathname === '/preview/';
-  if (!isPreviewRoute && !validCookie(req)) return send(res, 200, readFileSync(COMING_SOON_FILE), 'text/html; charset=utf-8');
+  if (!isPreviewRoute && !validCookie(req)) {
+    return send(res, 200, readFileSync(COMING_SOON_FILE), 'text/html; charset=utf-8');
+  }
   return send(res, 200, readFileSync(join(DIST_DIR, 'index.html')), 'text/html; charset=utf-8');
 }).listen(PORT, HOST, () => console.log('KGP preview gate listening on http://' + HOST + ':' + PORT));
