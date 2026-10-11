@@ -4,21 +4,22 @@ import { createServer } from 'node:http';
 import { dirname, extname, join, normalize, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-// Node 18-compatible .env loading. Environment variables already provided by
-// systemd take precedence over values in ../ci/.env.
 const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
 const ENV_FILE = resolve(SCRIPT_DIR, '../../ci/.env');
+
+// Read ci/.env without requiring Node's newer --env-file option.
+// Variables supplied by systemd take precedence.
 if (existsSync(ENV_FILE)) {
-  const envText = readFileSync(ENV_FILE, 'utf8').replace(/^\\uFEFF/, '');
-  for (const line of envText.split(/\\r?\\n/)) {
-    const match = line.match(/^\\s*(?:export\\s+)?([A-Za-z_][A-Za-z0-9_]*)\\s*=\\s*(.*?)\\s*$/);
+  const envText = readFileSync(ENV_FILE, 'utf8').replace(/^\uFEFF/, '');
+  for (const line of envText.split(/\r?\n/)) {
+    const match = line.match(/^\s*(?:export\s+)?([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*?)\s*$/);
     if (!match || process.env[match[1]] !== undefined) continue;
     let value = match[2];
     if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
       value = value.slice(1, -1);
-      if (match[2].startsWith('"')) value = value.replace(/\\\\n/g, '\\n').replace(/\\\\r/g, '\\r');
+      if (match[2].startsWith('"')) value = value.replace(/\\n/g, '\n').replace(/\\r/g, '\r');
     } else {
-      value = value.replace(/\\s+#.*$/, '');
+      value = value.replace(/\s+#.*$/, '');
     }
     process.env[match[1]] = value;
   }
@@ -26,7 +27,7 @@ if (existsSync(ENV_FILE)) {
 
 const HOST = process.env.HOST || '127.0.0.1';
 const PORT = Number(process.env.PORT || 4173);
-const DIST_DIR = resolve(process.env.KGP_DIST_DIR || './dist');
+const DIST_DIR = resolve(process.env.KGP_DIST_DIR || join(SCRIPT_DIR, '../dist'));
 const COMING_SOON_FILE = resolve(process.env.KGP_COMING_SOON_FILE || join(SCRIPT_DIR, '../coming-soon.html'));
 const PREVIEW_PASSWORD = process.env.PREVIEW_PASSWORD || '';
 const PREVIEW_COOKIE_SECRET = process.env.PREVIEW_COOKIE_SECRET || '';
@@ -53,7 +54,7 @@ function validCookie(req) {
   const token = cookieHeader.match(new RegExp('(?:^|;\\s*)' + COOKIE_NAME + '=([^;]+)'))?.[1];
   if (!token) return false;
   const parts = token.split('.');
-  if (parts.length !== 2 || !/^\\d+$/.test(parts[0])) return false;
+  if (parts.length !== 2 || !/^\d+$/.test(parts[0])) return false;
   const [expiry, signature] = parts;
   if (Number(expiry) <= Math.floor(Date.now() / 1000)) return false;
   const expected = Buffer.from(sign(expiry));
@@ -82,11 +83,11 @@ function readJson(req) {
 }
 function serveStatic(pathname, res) {
   let relative;
-  try { relative = decodeURIComponent(pathname).replace(/^\\/+/, ''); } catch { return false; }
+  try { relative = decodeURIComponent(pathname).replace(/^\/+/, ''); } catch { return false; }
   const filePath = normalize(join(DIST_DIR, relative));
   if (!filePath.startsWith(DIST_DIR + sep) || !existsSync(filePath) || !statSync(filePath).isFile()) return false;
   const types = { '.js':'text/javascript; charset=utf-8', '.css':'text/css; charset=utf-8', '.svg':'image/svg+xml', '.png':'image/png', '.jpg':'image/jpeg', '.jpeg':'image/jpeg', '.webp':'image/webp', '.ico':'image/x-icon', '.woff':'font/woff', '.woff2':'font/woff2', '.json':'application/json; charset=utf-8' };
-  res.writeHead(200, { 'Content-Type': types[extname(filePath)] || 'application/octet-stream', 'Cache-Control': /\\.[a-f0-9]{8,}\\./i.test(filePath) ? 'public, max-age=31536000, immutable' : 'public, max-age=300', 'X-Content-Type-Options':'nosniff' });
+  res.writeHead(200, { 'Content-Type': types[extname(filePath)] || 'application/octet-stream', 'Cache-Control': /\.[a-f0-9]{8,}\./i.test(filePath) ? 'public, max-age=31536000, immutable' : 'public, max-age=300', 'X-Content-Type-Options':'nosniff' });
   createReadStream(filePath).pipe(res);
   return true;
 }
@@ -129,13 +130,10 @@ createServer(async (req, res) => {
     return send(res, 404, 'Not Found');
   }
 
-  // Vite assets must load for both the Coming Soon page and the /preview form.
   if (pathname.startsWith('/assets/') || pathname === '/favicon.ico' || pathname === '/logo.png') {
     if (serveStatic(pathname, res)) return;
   }
 
-  // The only public HTML route is /preview. Every other path, including /news
-  // and unknown routes, is gated before the SPA is served.
   const isPreviewRoute = pathname === '/preview' || pathname === '/preview/';
   if (!isPreviewRoute && !validCookie(req)) {
     return send(res, 200, readFileSync(COMING_SOON_FILE), 'text/html; charset=utf-8');
