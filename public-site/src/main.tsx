@@ -43,6 +43,32 @@ function resolveRoute(pathname: string): Route {
   return { name: 'notFound' };
 }
 
+function OpeningScreen() {
+  const [visible, setVisible] = useState(false);
+  const [leaving, setLeaving] = useState(false);
+
+  useEffect(() => {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced || sessionStorage.getItem('kgp-opening-seen') === '1') return;
+    setVisible(true);
+    const hide = window.setTimeout(() => setLeaving(true), 2050);
+    const remove = window.setTimeout(() => {
+      setVisible(false);
+      sessionStorage.setItem('kgp-opening-seen', '1');
+    }, 2700);
+    return () => { window.clearTimeout(hide); window.clearTimeout(remove); };
+  }, []);
+
+  if (!visible) return null;
+  return <div className={leaving ? 'opening-screen is-leaving' : 'opening-screen'} role="status" aria-label="KGP welcome">
+    <div className="opening-scan" />
+    <div className="opening-mark"><span>K</span><i /><span>G</span><i /><span>P</span></div>
+    <p className="opening-name">KAZAMATAI COMMUNITY</p>
+    <p className="opening-tagline">あなたの「好き」で、みんなの「居場所」を。</p>
+    <div className="opening-progress"><span /></div>
+  </div>;
+}
+
 function LanguagePicker({ language, copy, onChange }: { language: Language; copy: Copy; onChange: (next: Language) => void }) {
   return <div className="language-picker" role="group" aria-label={copy.nav.language}>
     {languages.map((option) => <button
@@ -99,7 +125,6 @@ function Footer({ copy }: { copy: Copy }) {
       <div className="footer-contact"><span>{copy.common.contact}</span><a href={`mailto:${site.contact}`}>{site.contact}<span aria-hidden="true">↗</span></a></div>
     </div>
     <div className="footer-bottom">
-      
       <div className="social-links" aria-label={copy.footer.follow}>
         <a href="https://x.com/official_kgp" target="_blank" rel="noreferrer">X ↗</a>
         <a href="https://instagram.com/kazamatai_gp" target="_blank" rel="noreferrer">Instagram ↗</a>
@@ -108,7 +133,6 @@ function Footer({ copy }: { copy: Copy }) {
         <a href="https://note.com/official_kgp" target="_blank" rel="noreferrer">note ↗</a>
       </div>
       <span>© 2025 - 2026 {copy.siteName}. {copy.footer.rights}</span>
-
     </div>
   </footer>;
 }
@@ -145,6 +169,7 @@ function App() {
   })();
 
   return <>
+    <OpeningScreen />
     <a className="skip-link" href="#main-content">{copy.common.skip}</a>
     <Header route={route} copy={copy} language={language} onLanguageChange={setLanguage} />
     <main id="main-content">{page}</main>
