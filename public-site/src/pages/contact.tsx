@@ -1,23 +1,10 @@
 import type { Copy } from '../locales';
-
 type ContactPageProps = { copy: Copy; contactEmail: string };
-
 export function ContactPage({ copy, contactEmail }: ContactPageProps) {
   return <>
-    <section className="page-hero page-hero-blue">
-      <p className="eyebrow"><span className="eyebrow-mark" />{copy.contact.eyebrow}</p>
-      <h1>{copy.contact.title}</h1>
-      <p className="page-lede">{copy.contact.description}</p>
-      <span className="page-index">{copy.contact.index}</span>
-    </section>
-    <section className="content-section contact-layout">
-      <a className="contact-email" href={`mailto:${contactEmail}`}><span>{copy.contact.email}</span><strong>{contactEmail}</strong><span aria-hidden="true">↗</span></a>
-      <form className="contact-form" action="https://formspree.io/f/mnqvkwqj" method="POST">
-        <label>{copy.contact.formName}<input name="name" autoComplete="name" required /></label>
-        <label>{copy.contact.formEmail}<input type="email" name="_replyto" autoComplete="email" required /></label>
-        <label>{copy.contact.formMessage}<textarea name="message" rows={5} required /></label>
-        <button className="button button-ink" type="submit">{copy.contact.send}<span aria-hidden="true">↗</span></button>
-      </form>
+    <section className="subpage-hero subpage-hero-contact"><p className="eyebrow">CONTACT / SAY HELLO</p><span className="subpage-number">05 / CONTACT</span><h1>ご質問・ご相談は、<br /><em>こちらから。</em></h1><p>サイトやコミュニティに関するお問い合わせを受け付けています。</p></section>
+    <section className="contact-page-layout"><div className="contact-intro"><p className="eyebrow">GET IN TOUCH</p><h2>あなたの声を、<br /><em>聞かせてください。</em></h2><p>お問い合わせの内容によっては、回答までお時間をいただく場合があります。Discord内の個別対応が必要な場合は、サーバー内の案内もご確認ください。</p><a className="contact-mail-card" href={\`mailto:\${contactEmail}\`}><small>EMAIL CONTACT</small><strong>{contactEmail}</strong><b>↗</b></a></div>
+      <form className="contact-form-portal" action="https://formspree.io/f/mnqvkwqj" method="POST"><label>お名前<input name="name" autoComplete="name" required placeholder="お名前・ハンドルネーム" /></label><label>メールアドレス<input type="email" name="_replyto" autoComplete="email" required placeholder="you@example.com" /></label><label>お問い合わせ内容<textarea name="message" rows={6} required placeholder="お問い合わせ内容をご記入ください。" /></label><label className="contact-consent"><input type="checkbox" required /><span><a href="/privacy">プライバシーポリシー</a>を確認しました。</span></label><button className="portal-button portal-button-primary" type="submit"><span>{copy.contact.send}</span><b>↗</b></button><small>送信には外部フォームサービスを利用します。</small></form>
     </section>
   </>;
 }
