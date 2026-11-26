@@ -7,50 +7,6 @@ type HomePageProps = { copy: Copy; language: Language; inviteUrl: string };
 function NewsTicker({ copy, language }: Pick<HomePageProps, 'copy' | 'language'>) {
   const [items, setItems] = useState<News[]>([]);
   const [state, setState] = useState<'loading' | 'ready' | 'error'>('loading');
-  useEffect(() => {
-    let active = true;
-    getNews().then((news) => {
-      if (!active) return;
-      setItems(news.slice(0, 3));
-      setState('ready');
-    }).catch(() => active && setState('error'));
-    return () => { active = false; };
-  }, []);
-  return <div className="home-news-feed">
-    {state === 'loading' && <p className="quiet">{copy.news.loading}</p>}
-    {state === 'error' && <p className="quiet">{copy.news.error}</p>}
-    {state === 'ready' && items.length === 0 && <p className="quiet">{copy.news.empty}</p>}
-    {items.map((item, index) => <a className="home-news-item" href={\`/news/\${encodeURIComponent(item.slug)}\`} key={item.id}>
-      <span className="home-news-no">0{index + 1}</span><span className="home-news-title"><small>{item.category}</small><strong>{item.title}</strong></span>
-      <time>{item.published_at ? new Date(item.published_at).toLocaleDateString(language) : ''}</time><b aria-hidden="true">↗</b>
-    </a>)}
-  </div>;
-}
-
-const highlights = [
-  { id: '01', icon: '✳', en: 'CHAT & CONNECT', title: '好きな話題で、気軽につながる。', body: '風真いろはやhololiveの話題はもちろん、日常のこと、趣味のことも。テキスト・ボイスで自分らしく交流できます。', color: 'mint' },
-  { id: '02', icon: '✧', en: 'EVENT & PROJECT', title: 'みんなで楽しむ企画とイベント。', body: '同時視聴やクイズ、誕生日企画などを不定期で開催。メンバーのアイデアから新しい楽しみ方も生まれます。', color: 'peach' },
-  { id: '03', icon: '⌘', en: 'ORIGINAL SYSTEM', title: 'KGPならではの独自Bot。', body: 'おみくじやRankなど、コミュニティをもっと楽しくする独自機能を開発・運用しています。', color: 'blue' },
-  { id: '04', icon: '◎', en: 'YOUR OWN PACE', title: 'ROM専だって、立派な参加。', body: '会話に入るのが得意でなくても大丈夫。読むだけ、リアクションだけ、自分のペースで過ごせます。', color: 'lilac' },
-];
-
-export function HomePage({ copy, language, inviteUrl }: HomePageProps) {
-  useEffect(() => {
-    const nodes = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]'));
-    if (!('IntersectionObserver' in window)) {
-      nodes.forEach((node) => node.classList.add('is-visible'));
-      return;
-    }
-    const observer = new IntersectionObserver((entries) => entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        observer.unobserve(entry.target);
-      }
-    }), { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-    nodes.forEach((node) => observer.observe(node));
-    return () => observer.disconnect();
-  }, []);
-
   return <>
     <section className="portal-hero">
       <div className="hero-gridlines" aria-hidden="true" />
