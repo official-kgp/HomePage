@@ -18,7 +18,7 @@ export function NewsPage({ copy, language }: NewsPageProps) {
       {state === 'loading' && <p className="quiet">{copy.news.loading}</p>}
       {state === 'error' && <p className="quiet" role="alert">{copy.news.error}</p>}
       {state === 'ready' && items.length === 0 && <p className="quiet">{copy.news.empty}</p>}
-      <div className="news-archive">{items.map((item, index) => <a className="news-archive-item" href={\`/news/\${encodeURIComponent(item.slug)}\`} key={item.id}><span className="archive-no">{String(index + 1).padStart(2, '0')}</span><span className="archive-main"><small>{item.category}</small><strong>{item.title}</strong><span>{item.excerpt}</span></span><time>{item.published_at ? new Date(item.published_at).toLocaleDateString(language) : ''}</time><b>↗</b></a>)}</div>
+      <div className="news-archive">{items.map((item, index) => <a className="news-archive-item" href={`/news/${encodeURIComponent(item.slug)}`} key={item.id}><span className="archive-no">{String(index + 1).padStart(2, '0')}</span><span className="archive-main"><small>{item.category}</small><strong>{item.title}</strong><span>{item.excerpt}</span></span><time>{item.published_at ? new Date(item.published_at).toLocaleDateString(language) : ''}</time><b>↗</b></a>)}</div>
     </section>
   </>;
 }
