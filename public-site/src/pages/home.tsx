@@ -75,6 +75,26 @@ export function HomePage({ copy, language, inviteUrl }: HomePageProps) {
       {Array.from({ length: 4 }, (_, i) => <span key={i}>YOUR LIKES, OUR PLACE <b>✳</b> みんなでつくる、みんなの居場所 <b>✧</b></span>)}
     </div></section>
 
+    <section className="iroha-feature-section">
+      <div className="iroha-feature-heading" data-reveal>
+        <p className="eyebrow">OUR FAVORITE NINJA / KAZAMA IROHA</p>
+        <h2>風真いろはの魅力を、<em>もっと知ろう。</em></h2>
+        <p>プロフィールから音楽、配信まで。公式の情報へつながる入口をまとめました。</p>
+      </div>
+      <div className="iroha-feature-grid">
+        <a className="iroha-feature-card iroha-feature-profile" href="/iroha" data-reveal>
+          <span className="iroha-feature-icon">🍃</span><small>01 / PROFILE</small><strong>風真いろはを知る</strong><span>プロフィール・活動情報 <b>↗</b></span>
+        </a>
+        <a className="iroha-feature-card iroha-feature-music" href="/iroha/music" data-reveal>
+          <span className="iroha-feature-icon">♫</span><small>02 / MUSIC</small><strong>音楽を楽しむ</strong><span>オリジナル楽曲・公式リリース <b>↗</b></span>
+        </a>
+        <a className="iroha-feature-card iroha-feature-streams" href="/iroha/streams" data-reveal>
+          <span className="iroha-feature-icon">▶</span><small>03 / STREAMS</small><strong>配信を見に行く</strong><span>ライブ・アーカイブ・動画 <b>↗</b></span>
+        </a>
+      </div>
+      <p className="iroha-feature-note">※ 当ページはファンによる情報案内ページです。音楽・動画の再生は各公式サービスでお楽しみください。</p>
+    </section>
+
     <section className="intro-section" id="discover">
       <div className="section-index" data-reveal><span>01 / ABOUT</span><i /></div>
       <div className="intro-layout">
