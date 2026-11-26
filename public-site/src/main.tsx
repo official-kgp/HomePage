@@ -7,6 +7,9 @@ import { ContactPage } from './pages/contact';
 import { FaqPage } from './pages/faq';
 import { GuidePage } from './pages/guide';
 import { HomePage } from './pages/home';
+import { IrohaProfilePage } from './pages/iroha';
+import { IrohaMusicPage } from './pages/irohaMusic';
+import { IrohaStreamsPage } from './pages/irohaStreams';
 import { NewsPage } from './pages/news';
 import { PrivacyPage } from './pages/privacy';
 import { PreviewPage } from './pages/preview';
@@ -20,7 +23,7 @@ type Route =
   | { name: 'home' } | { name: 'server' } | { name: 'guide' } | { name: 'faq' }
   | { name: 'news' } | { name: 'article'; slug: string } | { name: 'contact' }
   | { name: 'rule' } | { name: 'terms' } | { name: 'privacy' }
-  | { name: 'preview' } | { name: 'notFound' };
+  | { name: 'preview' } | { name: 'iroha' } | { name: 'irohaMusic' } | { name: 'irohaStreams' } | { name: 'notFound' };
 
 function resolveRoute(pathname: string): Route {
   const path = pathname.replace(/\/+$/, '') || '/';
@@ -34,6 +37,9 @@ function resolveRoute(pathname: string): Route {
   if (path === '/terms' || path === '/tos') return { name: 'terms' };
   if (path === '/privacy') return { name: 'privacy' };
   if (path === '/preview') return { name: 'preview' };
+  if (path === '/iroha') return { name: 'iroha' };
+  if (path === '/iroha/music') return { name: 'irohaMusic' };
+  if (path === '/iroha/streams') return { name: 'irohaStreams' };
   const articleMatch = path.match(/^\/news\/(.+)$/);
   if (articleMatch) {
     try { return { name: 'article', slug: decodeURIComponent(articleMatch[1]) }; }
@@ -98,6 +104,7 @@ function Header({ route, copy, language, onLanguageChange }: { route: Route; cop
   const links = [
     { href: '/', label: copy.nav.home, active: route.name === 'home' },
     { href: '/server', label: 'サーバー紹介', active: route.name === 'server' },
+    { href: '/iroha', label: '風真いろは', active: ['iroha', 'irohaMusic', 'irohaStreams'].includes(route.name) },
     { href: '/guide', label: '参加ガイド', active: route.name === 'guide' },
     { href: '/news', label: copy.nav.news, active: route.name === 'news' || route.name === 'article' },
     { href: '/faq', label: 'FAQ', active: route.name === 'faq' },
@@ -157,7 +164,8 @@ function App() {
     const titles: Record<Route['name'], string> = {
       home: copy.siteName, server: 'サーバー紹介', guide: '参加ガイド', faq: 'よくある質問',
       news: copy.nav.news, article: copy.nav.news, contact: copy.nav.contact, rule: 'コミュニティルール',
-      terms: '利用規約', privacy: 'プライバシーポリシー', preview: 'プレビュー認証', notFound: copy.common.notFound,
+      terms: '利用規約', privacy: 'プライバシーポリシー', preview: 'プレビュー認証',
+      iroha: '風真いろは プロフィール', irohaMusic: '風真いろは 音楽', irohaStreams: '風真いろは 配信', notFound: copy.common.notFound,
     };
     document.title = `${titles[route.name]} | ${copy.siteName}`;
   }, [copy, language, route.name]);
@@ -174,6 +182,9 @@ function App() {
       case 'terms': return <TermsPage />;
       case 'privacy': return <PrivacyPage />;
       case 'preview': return <PreviewPage />;
+      case 'iroha': return <IrohaProfilePage />;
+      case 'irohaMusic': return <IrohaMusicPage />;
+      case 'irohaStreams': return <IrohaStreamsPage />;
       case 'notFound': return <NotFoundPage copy={copy} />;
     }
   })();
