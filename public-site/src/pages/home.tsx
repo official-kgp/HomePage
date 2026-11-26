@@ -53,7 +53,7 @@ function NewsTicker({ copy, language }: Pick<HomePageProps, 'copy' | 'language'>
       <div className="section-index" data-reveal><span>02 / DISCOVER</span><i /></div>
       <div className="section-heading-portal" data-reveal><div><p className="eyebrow">FIND YOUR WAY TO ENJOY</p><h2>ここでできる、<br /><em>いろんな楽しみ方。</em></h2></div><p>会話だけがコミュニティの楽しみ方じゃない。<br />あなたに合った関わり方を見つけてください。</p></div>
       <div className="discover-grid">
-        {highlights.map((item) => <article className={\`discover-card discover-\${item.color}\`} data-reveal key={item.id}>
+        {highlights.map((item) => <article className={`discover-card discover-${item.color}`} data-reveal key={item.id}>
           <div className="discover-card-head"><span>{item.id} / {item.en}</span><b>{item.icon}</b></div><h3>{item.title}</h3><p>{item.body}</p><span className="discover-card-deco">{item.icon}</span>
         </article>)}
       </div>
