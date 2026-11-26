@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import type { FormEvent } from 'react';
-import './preview.css';
+import './styles/preview.css';
 
 export function PreviewPage() {
   const [password, setPassword] = useState('');
