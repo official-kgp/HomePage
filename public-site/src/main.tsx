@@ -23,7 +23,7 @@ type Route =
   | { name: 'notFound' };
 
 function resolveRoute(pathname: string): Route {
-  const path = pathname.replace(/\\/+$/, '') || '/';
+  const path = pathname.replace(/\/+$/, '') || '/';
   if (path === '/') return { name: 'home' };
   if (path === '/server') return { name: 'server' };
   if (path === '/news') return { name: 'news' };
@@ -31,7 +31,7 @@ function resolveRoute(pathname: string): Route {
   if (path === '/rule') return { name: 'rule' };
   if (path === '/preview') return { name: 'preview' };
 
-  const articleMatch = path.match(/^\\/news\\/(.+)$/);
+  const articleMatch = path.match(/^\/news\/(.+)$/);
   if (articleMatch) {
     try {
       return { name: 'article', slug: decodeURIComponent(articleMatch[1]) };
