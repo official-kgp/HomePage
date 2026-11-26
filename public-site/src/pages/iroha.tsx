@@ -30,7 +30,7 @@ export function IrohaProfilePage() {
         <a className="iroha-link-card" href={youtubeUrl} target="_blank" rel="noreferrer"><span><strong>YouTube</strong><small>Iroha ch. 風真いろは - holoX -</small></span><b>↗</b></a>
         <a className="iroha-link-card" href={xUrl} target="_blank" rel="noreferrer"><span><strong>X</strong><small>@kazamairohach</small></span><b>↗</b></a>
         <a className="iroha-link-card" href={officialProfileUrl} target="_blank" rel="noreferrer"><span><strong>hololive 公式プロフィール</strong><small>最新のプロフィール・公式情報</small></span><b>↗</b></a>
-        <a className="iroha-link-card" href="https://3d.nicovideo.jp/users/117212700" target="_blank" rel="noreferrer"><span><strong>MMD</strong><small>公式プロフィール掲載の関連リンク</small></span><b>↗</b></a>
+        <a className="iroha-link-card" href="https://3d.nicovideo.jp/works/td84835" target="_blank" rel="noreferrer"><span><strong>MMD</strong><small>公式プロフィール掲載の関連リンク</small></span><b>↗</b></a>
       </div>
       <div className="iroha-page-actions">
         <a className="portal-button portal-button-primary" href="/iroha/music"><span>音楽をチェック</span><b>→</b></a>
