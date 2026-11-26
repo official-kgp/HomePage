@@ -82,6 +82,7 @@ function Header({ route, copy, language, onLanguageChange }: { route: Route; cop
     { href: '/guide', label: '参加ガイド', active: route.name === 'guide' },
     { href: '/news', label: copy.nav.news, active: route.name === 'news' || route.name === 'article' },
     { href: '/faq', label: 'FAQ', active: route.name === 'faq' },
+    { href: '/rule', label: 'ルール', active: route.name === 'rule' },
     { href: '/contact', label: copy.nav.contact, active: route.name === 'contact' },
   ];
   const closeMenu = () => {
