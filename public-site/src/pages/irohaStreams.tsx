@@ -1,10 +1,10 @@
 const channel = 'https://www.youtube.com/channel/UC_vMYWcDjmfdpH6r4TTn1MQ';
 
 const destinations = [
-  { title: 'ライブ配信', en: 'LIVE STREAMS', detail: '配信中のライブや配信予定をチェック', url: channel + '/streams', icon: 'LIVE' },
-  { title: '動画・アーカイブ', en: 'VIDEOS & ARCHIVES', detail: '過去の配信や投稿動画を見つける', url: channel + '/videos', icon: '▶' },
-  { title: 'ショート動画', en: 'SHORTS', detail: '短い動画や切り抜き以外の公式投稿をチェック', url: channel + '/shorts', icon: '✦' },
-  { title: '公式X', en: 'OFFICIAL X', detail: '配信のお知らせや最新の投稿を確認', url: 'https://twitter.com/kazamairohach', icon: 'X' },
+  { title: 'ライブ配信', en: 'LIVE STREAMS', detail: '配信中のライブや配信予定をチェック', url: channel + '/streams' },
+  { title: '動画・アーカイブ', en: 'VIDEOS & ARCHIVES', detail: '過去の配信や投稿動画を見つける', url: channel + '/videos' },
+  { title: 'ショート動画', en: 'SHORTS', detail: '短い動画コンテンツをチェック', url: channel + '/shorts' },
+  { title: '公式X', en: 'OFFICIAL X', detail: '配信のお知らせや最新の投稿を確認', url: 'https://twitter.com/kazamairohach' },
 ];
 
 export function IrohaStreamsPage() {
@@ -21,7 +21,7 @@ export function IrohaStreamsPage() {
       <p>このページは配信・動画へのリンクをまとめた案内ページです。動画の埋め込みやサイト内再生は行わず、各リンクからYouTubeなどの公式サービスへ移動します。</p>
       <div className="iroha-link-grid">
         {destinations.map((item) => <a className="iroha-link-card" href={item.url} target="_blank" rel="noreferrer" key={item.title}>
-          <span><strong>{item.title}</strong><small>{item.en} — {item.detail}</small></span><b>{item.icon === 'LIVE' ? '↗' : '↗'}</b>
+          <span><strong>{item.title}</strong><small>{item.en} — {item.detail}</small></span><b>↗</b>
         </a>)}
       </div>
       <div className="iroha-page-actions">
