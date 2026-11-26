@@ -104,7 +104,7 @@ export function HomePage({ copy, language, inviteUrl }: HomePageProps) {
         <p className="section-aside">A COMMUNITY MADE<br />TO BE YOUR PLACE.</p>
       </div>
       <div className="feature-grid">
-        {communityCards.map((feature, index) => <article className="feature-card" data-reveal key={feature.number} style={{ '--reveal-delay': `${index * 75}ms` } as React.CSSProperties}>
+        {communityCards.map((feature, index) => <article className="feature-card" data-reveal key={feature.number}>
           <div className="feature-card-top"><span className="feature-number">{feature.number}</span><span className="feature-icon">{feature.icon}</span></div>
           <p className="feature-tag">{feature.tag}</p>
           <h3>{feature.title}</h3>
