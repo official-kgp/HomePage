@@ -42,7 +42,7 @@ const highlights = [
 ];
 
 export function HomePage({ copy, language, inviteUrl }: HomePageProps) {
-
+  return <>
     <section className="portal-hero">
       <div className="hero-gridlines" aria-hidden="true" />
       <div className="hero-orbit hero-orbit-a" aria-hidden="true" /><div className="hero-orbit hero-orbit-b" aria-hidden="true" />
