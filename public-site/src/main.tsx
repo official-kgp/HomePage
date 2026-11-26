@@ -65,6 +65,25 @@ function OpeningScreen() {
   </div>;
 }
 
+function ScrollRevealObserver() {
+  useEffect(() => {
+    const nodes = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]'));
+    if (!('IntersectionObserver' in window)) {
+      nodes.forEach((node) => node.classList.add('is-visible'));
+      return;
+    }
+    const observer = new IntersectionObserver((entries) => entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    }), { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    nodes.forEach((node) => observer.observe(node));
+    return () => observer.disconnect();
+  }, []);
+  return null;
+}
+
 function LanguagePicker({ language, copy, onChange }: { language: Language; copy: Copy; onChange: (next: Language) => void }) {
   return <div className="language-picker" role="group" aria-label={copy.nav.language}>
     {languages.map((option) => <button aria-label={option.label} aria-pressed={language === option.id}
@@ -159,7 +178,7 @@ function App() {
     }
   })();
   return <>
-    <OpeningScreen /><a className="skip-link" href="#main-content">{copy.common.skip}</a>
+    <OpeningScreen /><ScrollRevealObserver /><a className="skip-link" href="#main-content">{copy.common.skip}</a>
     <Header route={route} copy={copy} language={language} onLanguageChange={setLanguage} />
     <main id="main-content" className="page-transition" key={pathname}>{page}</main>
     <Footer copy={copy} />
