@@ -126,7 +126,7 @@ function Footer({ copy }: { copy: Copy }) {
     <div className="footer-main">
       <div><img className="logo" src="https://img.suiten.site/Image/kgp-logo.png" alt="Server Logo" /><h2>{copy.siteName}</h2></div>
       <div><p>{copy.footer.footerDescription1}</p><p>{copy.footer.footerDescription2}</p><p>{copy.footer.footerDescription3}</p></div>
-      <div className="footer-contact"><span>{copy.common.contact}</span><a href={\`mailto:\${site.contact}\`}>{site.contact}<span aria-hidden="true">↗</span></a></div>
+      <div className="footer-contact"><span>{copy.common.contact}</span><a href={`mailto:${site.contact}`}>{site.contact}<span aria-hidden="true">↗</span></a></div>
     </div>
     <div className="footer-bottom">
       <div className="social-links" aria-label={copy.footer.follow}>
@@ -159,7 +159,7 @@ function App() {
       news: copy.nav.news, article: copy.nav.news, contact: copy.nav.contact, rule: 'コミュニティルール',
       terms: '利用規約', privacy: 'プライバシーポリシー', preview: 'プレビュー認証', notFound: copy.common.notFound,
     };
-    document.title = \`\${titles[route.name]} | \${copy.siteName}\`;
+    document.title = `${titles[route.name]} | ${copy.siteName}`;
   }, [copy, language, route.name]);
   const page = (() => {
     switch (route.name) {
