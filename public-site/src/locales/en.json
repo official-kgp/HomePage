@@ -2,7 +2,13 @@
   "languageName": "English",
   "siteName": "Kazamatai Community",
   "tagline": "Make good memories together.",
-  "nav": { "home": "Home", "server": "Community", "news": "News", "contact": "Contact", "language": "Choose language" },
+  "nav": {
+    "home": "Home",
+    "server": "Community",
+    "news": "News",
+    "contact": "Contact",
+    "language": "Choose language"
+  },
   "home": {
     "eyebrow": "KAZAMATAI COMMUNITY",
     "heroCaption": "Iroha Kazama",
@@ -16,9 +22,18 @@
     "featuresEyebrow": "COMMUNITY, TOGETHER",
     "featuresTitle": "Find your place here",
     "features": [
-      { "title": "Easy conversation", "body": "Drop in for a chat about streams, hobbies, or your day." },
-      { "title": "Things to enjoy", "body": "Community activities and events made for fans to join in." },
-      { "title": "Stay in the loop", "body": "Share community announcements and event updates." }
+      {
+        "title": "Easy conversation",
+        "body": "Drop in for a chat about streams, hobbies, or your day."
+      },
+      {
+        "title": "Things to enjoy",
+        "body": "Community activities and events made for fans to join in."
+      },
+      {
+        "title": "Stay in the loop",
+        "body": "Share community announcements and event updates."
+      }
     ],
     "latestNews": "From the community",
     "latestEyebrow": "LATEST UPDATES",
@@ -29,17 +44,68 @@
     "title": "Connected by what\nwe love.",
     "intro": "A welcoming place for Kazamatai to meet, share, and enjoy the community at their own pace.",
     "features": [
-      { "title": "Open conversation", "body": "Chat about streams, hobbies, and everyday things whenever you like." },
-      { "title": "Shared events", "body": "Seasonal activities and community projects to enjoy together." },
-      { "title": "A welcoming space", "body": "We value respect and make it easy for new members to join in." }
+      {
+        "title": "Open conversation",
+        "body": "Chat about streams, hobbies, and everyday things whenever you like."
+      },
+      {
+        "title": "Shared events",
+        "body": "Seasonal activities and community projects to enjoy together."
+      },
+      {
+        "title": "A welcoming space",
+        "body": "We value respect and make it easy for new members to join in."
+      }
     ],
     "join": "Join the community",
     "joinEyebrow": "WE WOULD LOVE TO MEET YOU",
     "index": "02 — COMMUNITY"
   },
-  "news": { "eyebrow": "LATEST UPDATES", "title": "News", "index": "03 — JOURNAL", "loading": "Loading news…", "empty": "There are no news posts yet.", "error": "We couldn't load the news.", "read": "Read story" },
-  "article": { "back": "Back to news", "loading": "Loading story…", "missing": "This story could not be found." },
-  "contact": { "eyebrow": "SAY HELLO", "title": "Contact", "index": "05 — CONTACT", "description": "Questions or feedback about the community? Send us a message.", "email": "Contact by email", "formName": "Your name", "formEmail": "Email address", "formMessage": "Message", "send": "Send message" },
-  "common": { "skip": "Skip to content", "mainNavigation": "Main navigation", "menuOpen": "Open menu", "menuClose": "Close menu", "notFoundEyebrow": "404 — NOT FOUND", "loading": "Loading…", "notFound": "Page not found", "notFoundDescription": "The page may have moved or may no longer exist.", "backHome": "Back home", "contact": "Contact" },
-  "footer": { "label": "KAZAMATAI COMMUNITY", "note": "A fan community celebrating Iroha Kazama", "follow": "Official channels", "rights": "All rights reserved." }
+  "news": {
+    "eyebrow": "LATEST UPDATES",
+    "title": "News",
+    "index": "03 — JOURNAL",
+    "loading": "Loading news…",
+    "empty": "There are no news posts yet.",
+    "error": "We couldn't load the news.",
+    "read": "Read story"
+  },
+  "article": {
+    "back": "Back to news",
+    "loading": "Loading story…",
+    "missing": "This story could not be found."
+  },
+  "contact": {
+    "eyebrow": "SAY HELLO",
+    "title": "Contact",
+    "index": "05 — CONTACT",
+    "description": "Questions or feedback about the community? Send us a message.",
+    "email": "Contact by email",
+    "formName": "Your name",
+    "formEmail": "Email address",
+    "formMessage": "Message",
+    "send": "Send message"
+  },
+  "common": {
+    "skip": "Skip to content",
+    "mainNavigation": "Main navigation",
+    "menuOpen": "Open menu",
+    "menuClose": "Close menu",
+    "notFoundEyebrow": "404 — NOT FOUND",
+    "loading": "Loading…",
+    "notFound": "Page not found",
+    "notFoundDescription": "The page may have moved or may no longer exist.",
+    "backHome": "Back home",
+    "contact": "Contact"
+  },
+  "footer": {
+    "label": "KAZAMATAI COMMUNITY",
+    "note": "A fan community celebrating Iroha Kazama",
+    "follow": "Official channels",
+    "rights": "All rights reserved.",
+    "footerCatchphrase": "Your 'likes' make a place for everyone.",
+    "footerDescription1": "Kazamatai Gathering Place is a Discord fan community supporting Iroha Kazama of hololive and holoX.",
+    "footerDescription2": "We aim to create a welcoming place where fans can connect and interact with one another.",
+    "footerDescription3": "We also host events and community activities for fans to enjoy together."
+  }
 }
