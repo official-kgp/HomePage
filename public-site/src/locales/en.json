@@ -41,13 +41,5 @@
   "article": { "back": "Back to news", "loading": "Loading story…", "missing": "This story could not be found." },
   "contact": { "eyebrow": "SAY HELLO", "title": "Contact", "index": "05 — CONTACT", "description": "Questions or feedback about the community? Send us a message.", "email": "Contact by email", "formName": "Your name", "formEmail": "Email address", "formMessage": "Message", "send": "Send message" },
   "common": { "skip": "Skip to content", "mainNavigation": "Main navigation", "menuOpen": "Open menu", "menuClose": "Close menu", "notFoundEyebrow": "404 — NOT FOUND", "loading": "Loading…", "notFound": "Page not found", "notFoundDescription": "The page may have moved or may no longer exist.", "backHome": "Back home", "contact": "Contact" },
-  "footer": {
-    "label": "KAZAMATAI GATHERING PLACE",
-    "footerCatchphrase": "With your \"likes\", creating a \"place\" for everyone.",
-    "footerDescription1": "かざま隊の集いの場は、ホロライブ、holoXの「風真いろは」さんを応援するDiscordファンコミュニティです。",
-    "footerDescription2": "かざま隊の集いの場では、ファン同士が交流し合うことのできる居場所を作る取り組みをしています。",
-    "footerDescription3": "また、イベントや企画なども行われており、ファン同士で楽しむことができます。",
-    "follow": "公式チャンネル",
-    "rights": "All rights reserved."
-  }
+  "footer": { "label": "KAZAMATAI COMMUNITY", "note": "A fan community celebrating Iroha Kazama", "follow": "Official channels", "rights": "All rights reserved." }
 }
