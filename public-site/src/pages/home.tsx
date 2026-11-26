@@ -7,7 +7,42 @@ type HomePageProps = { copy: Copy; language: Language; inviteUrl: string };
 function NewsTicker({ copy, language }: Pick<HomePageProps, 'copy' | 'language'>) {
   const [items, setItems] = useState<News[]>([]);
   const [state, setState] = useState<'loading' | 'ready' | 'error'>('loading');
-  return <>
+
+  useEffect(() => {
+    let active = true;
+    getNews()
+      .then((news) => {
+        if (active) {
+          setItems(news.slice(0, 3));
+          setState('ready');
+        }
+      })
+      .catch(() => {
+        if (active) setState('error');
+      });
+    return () => { active = false; };
+  }, []);
+
+  return <div className="home-news-ticker" aria-label={copy.nav.news} aria-live="polite">
+    {state === 'loading' && <p>お知らせを読み込んでいます…</p>}
+    {state === 'error' && <p>お知らせを取得できませんでした。</p>}
+    {state === 'ready' && (items.length > 0
+      ? items.map((item) => <a className="home-news-ticker-item" href={`/news/${encodeURIComponent(item.slug)}`} key={item.id}>
+          <small>{item.category}</small><strong>{item.title}</strong><time>{item.published_at ? new Date(item.published_at).toLocaleDateString(language) : ''}</time><span>↗</span>
+        </a>)
+      : <p>現在、お知らせはありません。</p>)}
+  </div>;
+}
+
+const highlights = [
+  { id: '01', en: 'TALK & CONNECT', color: 'mint', icon: '✳', title: '好きなことを、自由に話そう。', body: '日常の雑談から推しの話まで。共通の話題を通じて、メンバー同士で交流できます。' },
+  { id: '02', en: 'WATCH TOGETHER', color: 'blue', icon: '▷', title: '配信やイベントを一緒に。', body: '配信の感想を共有したり、イベントの盛り上がりをみんなで楽しめます。' },
+  { id: '03', en: 'CREATE & SHARE', color: 'pink', icon: '✧', title: '創作や趣味を共有しよう。', body: 'イラスト、ゲーム、音楽など、それぞれの得意や好きなことを持ち寄れます。' },
+  { id: '04', en: 'COMMUNITY EVENTS', color: 'orange', icon: '◎', title: '企画に参加してみよう。', body: 'メンバー参加型の企画や交流イベントなど、新しい楽しみ方に出会えます。' },
+];
+
+export function HomePage({ copy, language, inviteUrl }: HomePageProps) {
+
     <section className="portal-hero">
       <div className="hero-gridlines" aria-hidden="true" />
       <div className="hero-orbit hero-orbit-a" aria-hidden="true" /><div className="hero-orbit hero-orbit-b" aria-hidden="true" />
