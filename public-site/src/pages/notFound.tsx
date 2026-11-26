@@ -7,6 +7,6 @@ export function NotFoundPage({ copy }: NotFoundPageProps) {
     <p className="eyebrow">{copy.common.notFoundEyebrow}</p>
     <h1>{copy.common.notFound}</h1>
     <p>{copy.common.notFoundDescription}</p>
-    <a className="button button-ink" href="/site/">{copy.common.backHome}<span aria-hidden="true">↗</span></a>
+    <a className="button button-ink" href="/">{copy.common.backHome}<span aria-hidden="true">↗</span></a>
   </section>;
 }
