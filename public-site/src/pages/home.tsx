@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getNews, type News } from '../lib/api';
 import type { Copy, Language } from '../locales';
 
