@@ -1,0 +1,8 @@
+import type { Copy } from '../locales';
+export function GuidePage({ inviteUrl }: { copy: Copy; inviteUrl: string }) {
+  return <>
+    <section className="subpage-hero subpage-hero-guide"><p className="eyebrow">START HERE / NEW MEMBERS</p><span className="subpage-number">00 / WELCOME</span><h1>はじめまして。<br /><em>KGPへようこそ！</em></h1><p>初めてでも大丈夫。参加までの流れを、ひとつずつご案内します。</p></section>
+    <section className="guide-steps-page"><article><span>STEP 01</span><h2>Discordを準備しよう</h2><p>Discordアプリ、またはブラウザでDiscordを利用できる状態にします。アカウントをお持ちでない場合は、Discord公式の案内に沿って登録してください。</p><a href="https://discord.com/" target="_blank" rel="noreferrer">Discord公式サイト ↗</a></article><article><span>STEP 02</span><h2>招待リンクから参加</h2><p>下のボタンからKGPの招待ページを開き、「サーバーに参加」を選択してください。</p><a className="portal-button portal-button-primary" href={inviteUrl} target="_blank" rel="noreferrer"><span>招待リンクを開く</span><b>↗</b></a></article><article><span>STEP 03</span><h2>サーバーの案内を確認</h2><p>参加後は、案内・ルール・認証など、サーバー内に表示される手順を確認してください。分からないことがあれば、案内されている問い合わせ窓口をご利用ください。</p><a href="/rule">コミュニティルールを読む →</a></article><article><span>STEP 04</span><h2>自分のペースで楽しもう</h2><p>まずは気になるチャンネルを眺めるだけでもOK。話したいときに話す、イベントに参加する、情報をチェックするなど、自分に合う楽しみ方を見つけてください。</p><a href="/server">サーバーの機能を見る →</a></article></section>
+    <section className="guide-note"><p className="eyebrow">A SMALL REMINDER</p><h2>無理に話さなくても、<br /><em>ここにいて大丈夫。</em></h2><p>参加したばかりのときは、雰囲気を知るだけでも十分です。自分のペースで、少しずつKGPを知ってください。</p></section>
+  </>;
+}
