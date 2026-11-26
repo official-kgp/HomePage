@@ -6,7 +6,7 @@ const releases = [
   { title: 'ハードモード', label: 'SINGLE / ORIGINAL', url: 'https://hololive.hololivepro.com/music/491/' },
   { title: '魔法少女まじかる☆ござる', label: 'SINGLE / ORIGINAL', url: 'https://hololive.hololivepro.com/music/419/' },
   { title: '風を仰ぎし麗容な', label: 'SINGLE / ORIGINAL', url: 'https://hololive.hololivepro.com/music/364/' },
-  { title: 'いろはすてっぷ！', label: '1ST SINGLE / ORIGINAL', url: 'https://hololive.hololivepro.com/music/いろはすてっぷ！/' },
+  { title: 'いろはすてっぷ！', label: '1ST SINGLE / ORIGINAL', url: 'https://hololive.hololivepro.com/music/%E3%81%84%E3%82%8D%E3%81%AF%E3%81%99%E3%81%A6%E3%81%A3%E3%81%B7%EF%BC%81/' },
 ];
 
 export function IrohaMusicPage() {
