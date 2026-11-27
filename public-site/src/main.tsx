@@ -119,58 +119,94 @@ function LanguagePicker({ language, copy, onChange }: { language: Language; copy
 
 function Header({ route, copy, language, onLanguageChange }: { route: Route; copy: Copy; language: Language; onLanguageChange: (next: Language) => void }) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [expanded, setExpanded] = useState<Record<string, boolean>>({ iroha: true });
   const activeIroha = ['iroha', 'irohaMusic', 'irohaStreams'].includes(route.name);
-  const activeCommunity = ['guide', 'faq', 'rule', 'contact', 'news', 'article'].includes(route.name);
-  const toggleGroup = (key: string) => setExpanded((current) => ({ ...current, [key]: !current[key] }));
+  const activeServer = ['server', 'guide', 'faq', 'rule'].includes(route.name);
+  const activeCommunity = ['news', 'article', 'contact'].includes(route.name);
+  const activeLegal = ['terms', 'privacy'].includes(route.name);
+  const activeGroup = activeIroha ? 'iroha' : activeServer ? 'server' : activeCommunity ? 'community' : activeLegal ? 'legal' : null;
+  const [expandedGroup, setExpandedGroup] = useState<string | null>(activeGroup ?? 'iroha');
+
+  useEffect(() => {
+    setExpandedGroup(activeGroup ?? 'iroha');
+  }, [activeGroup]);
+
+  const toggleGroup = (key: string) => setExpandedGroup((current) => current === key ? null : key);
   const closeMenu = () => setMenuOpen(false);
+  const isExpanded = (key: string) => expandedGroup === key;
+
   return <header className="site-header">
-    <a className="brand" href="/" aria-label={copy.siteName} onClick={closeMenu}><img src="https://img.suiten.site/Image/kgp-logo.png" alt="" /><span>{copy.siteName}<small>OFFICIAL COMMUNITY / PORTAL</small></span></a>
+    <a className="brand" href="/" aria-label={copy.siteName} onClick={closeMenu}>
+      <img src="https://img.suiten.site/Image/kgp-logo.png" alt="" />
+      <span>{copy.siteName}<small>OFFICIAL COMMUNITY / PORTAL</small></span>
+    </a>
     <button className={menuOpen ? 'menu-toggle is-open' : 'menu-toggle'} type="button"
       aria-expanded={menuOpen} aria-controls="site-navigation" aria-label={menuOpen ? copy.common.menuClose : copy.common.menuOpen}
-      onClick={() => setMenuOpen((open) => !open)}><span /><span /></button>
+      onClick={() => setMenuOpen((open) => !open)}>
+      <span /><span />
+    </button>
     <nav className={menuOpen ? 'site-navigation is-open' : 'site-navigation'} id="site-navigation" aria-label={copy.common.mainNavigation}>
       <div className="nav-mobile-heading"><span>EXPLORE KGP</span><small>FIND YOUR WAY</small></div>
-      <a className={route.name === 'home' ? 'nav-link is-active' : 'nav-link'} href="/" onClick={closeMenu}><span className="nav-index">00</span>{copy.nav.home}</a>
-      <div className="nav-group">
-        <button className={route.name === 'server' ? 'nav-group-trigger is-active' : 'nav-group-trigger'} type="button" aria-expanded={!!expanded.server} onClick={() => toggleGroup('server')}><span><i className="nav-index">01</i>サーバー</span><b className="nav-chevron">›</b></button>
-        <div className={expanded.server ? 'nav-submenu is-expanded' : 'nav-submenu'}>
-          <a href="/server" onClick={closeMenu}>サーバー紹介 <small>ABOUT KGP</small></a>
-          <a href="/guide" onClick={closeMenu}>参加ガイド <small>GETTING STARTED</small></a>
-          <a href="/faq" onClick={closeMenu}>よくある質問 <small>FAQ</small></a>
-          <a href="/rule" onClick={closeMenu}>コミュニティルール <small>GUIDELINES</small></a>
+
+      <a className={route.name === 'home' ? 'nav-link is-active' : 'nav-link'} href="/"
+        aria-current={route.name === 'home' ? 'page' : undefined} onClick={closeMenu}>
+        <span className="nav-index">00</span><span>{copy.nav.home}</span>
+      </a>
+
+      <div className={activeGroup === 'server' ? 'nav-group is-current' : 'nav-group'}>
+        <button className={activeGroup === 'server' ? 'nav-group-trigger is-active' : 'nav-group-trigger'} type="button"
+          aria-expanded={isExpanded('server')} aria-controls="submenu-server" onClick={() => toggleGroup('server')}>
+          <span><i className="nav-index">01</i>サーバー</span><b className="nav-chevron" aria-hidden="true">›</b>
+        </button>
+        <div className={isExpanded('server') ? 'nav-submenu is-expanded' : 'nav-submenu'} id="submenu-server">
+          <a className={route.name === 'server' ? 'is-current' : undefined} href="/server" onClick={closeMenu} aria-current={route.name === 'server' ? 'page' : undefined}>サーバー紹介 <small>ABOUT KGP</small></a>
+          <a className={route.name === 'guide' ? 'is-current' : undefined} href="/guide" onClick={closeMenu} aria-current={route.name === 'guide' ? 'page' : undefined}>参加ガイド <small>GETTING STARTED</small></a>
+          <a className={route.name === 'faq' ? 'is-current' : undefined} href="/faq" onClick={closeMenu} aria-current={route.name === 'faq' ? 'page' : undefined}>よくある質問 <small>FAQ</small></a>
+          <a className={route.name === 'rule' ? 'is-current' : undefined} href="/rule" onClick={closeMenu} aria-current={route.name === 'rule' ? 'page' : undefined}>コミュニティルール <small>GUIDELINES</small></a>
         </div>
       </div>
-      <div className="nav-group">
-        <button className={activeIroha ? 'nav-group-trigger is-active' : 'nav-group-trigger'} type="button" aria-expanded={!!expanded.iroha} onClick={() => toggleGroup('iroha')}><span><i className="nav-index">02</i>風真いろは</span><b className="nav-chevron">⌄</b></button>
-        <div className={expanded.iroha ? 'nav-submenu is-expanded' : 'nav-submenu'}>
-          <a href="/iroha" onClick={closeMenu}>プロフィール <small>PROFILE</small></a>
-          <a href="/iroha/streams" onClick={closeMenu}>Video <small>STREAMS & ARCHIVES</small></a>
-          <a href="/iroha/music" onClick={closeMenu}>Music <small>OFFICIAL RELEASES</small></a>
+
+      <div className={activeGroup === 'iroha' ? 'nav-group is-current' : 'nav-group'}>
+        <button className={activeGroup === 'iroha' ? 'nav-group-trigger is-active' : 'nav-group-trigger'} type="button"
+          aria-expanded={isExpanded('iroha')} aria-controls="submenu-iroha" onClick={() => toggleGroup('iroha')}>
+          <span><i className="nav-index">02</i>風真いろは</span><b className="nav-chevron" aria-hidden="true">›</b>
+        </button>
+        <div className={isExpanded('iroha') ? 'nav-submenu is-expanded' : 'nav-submenu'} id="submenu-iroha">
+          <a className={route.name === 'iroha' ? 'is-current' : undefined} href="/iroha" onClick={closeMenu} aria-current={route.name === 'iroha' ? 'page' : undefined}>プロフィール <small>PROFILE</small></a>
+          <a className={route.name === 'irohaStreams' ? 'is-current' : undefined} href="/iroha/streams" onClick={closeMenu} aria-current={route.name === 'irohaStreams' ? 'page' : undefined}>Video <small>STREAMS & ARCHIVES</small></a>
+          <a className={route.name === 'irohaMusic' ? 'is-current' : undefined} href="/iroha/music" onClick={closeMenu} aria-current={route.name === 'irohaMusic' ? 'page' : undefined}>Music <small>OFFICIAL RELEASES</small></a>
         </div>
       </div>
-      <div className="nav-group">
-        <button className={activeCommunity ? 'nav-group-trigger is-active' : 'nav-group-trigger'} type="button" aria-expanded={!!expanded.community} onClick={() => toggleGroup('community')}><span><i className="nav-index">03</i>コミュニティ</span><b className="nav-chevron">›</b></button>
-        <div className={expanded.community ? 'nav-submenu is-expanded' : 'nav-submenu'}>
-          <a href="/news" onClick={closeMenu}>お知らせ <small>NEWS & JOURNAL</small></a>
-          <a href="/contact" onClick={closeMenu}>お問い合わせ <small>CONTACT</small></a>
+
+      <div className={activeGroup === 'community' ? 'nav-group is-current' : 'nav-group'}>
+        <button className={activeGroup === 'community' ? 'nav-group-trigger is-active' : 'nav-group-trigger'} type="button"
+          aria-expanded={isExpanded('community')} aria-controls="submenu-community" onClick={() => toggleGroup('community')}>
+          <span><i className="nav-index">03</i>コミュニティ</span><b className="nav-chevron" aria-hidden="true">›</b>
+        </button>
+        <div className={isExpanded('community') ? 'nav-submenu is-expanded' : 'nav-submenu'} id="submenu-community">
+          <a className={['news', 'article'].includes(route.name) ? 'is-current' : undefined} href="/news" onClick={closeMenu} aria-current={['news', 'article'].includes(route.name) ? 'page' : undefined}>お知らせ <small>NEWS & JOURNAL</small></a>
+          <a className={route.name === 'contact' ? 'is-current' : undefined} href="/contact" onClick={closeMenu} aria-current={route.name === 'contact' ? 'page' : undefined}>お問い合わせ <small>CONTACT</small></a>
         </div>
       </div>
-      <div className="nav-group">
-        <button className="nav-group-trigger" type="button" aria-expanded={!!expanded.legal} onClick={() => toggleGroup('legal')}><span><i className="nav-index">04</i>サイト情報</span><b className="nav-chevron">›</b></button>
-        <div className={expanded.legal ? 'nav-submenu is-expanded' : 'nav-submenu'}>
-          <a href="/terms" onClick={closeMenu}>利用規約 <small>TERMS OF SERVICE</small></a>
-          <a href="/privacy" onClick={closeMenu}>プライバシー <small>PRIVACY POLICY</small></a>
+
+      <div className={activeGroup === 'legal' ? 'nav-group is-current' : 'nav-group'}>
+        <button className={activeGroup === 'legal' ? 'nav-group-trigger is-active' : 'nav-group-trigger'} type="button"
+          aria-expanded={isExpanded('legal')} aria-controls="submenu-legal" onClick={() => toggleGroup('legal')}>
+          <span><i className="nav-index">04</i>サイト情報</span><b className="nav-chevron" aria-hidden="true">›</b>
+        </button>
+        <div className={isExpanded('legal') ? 'nav-submenu is-expanded' : 'nav-submenu'} id="submenu-legal">
+          <a className={route.name === 'terms' ? 'is-current' : undefined} href="/terms" onClick={closeMenu} aria-current={route.name === 'terms' ? 'page' : undefined}>利用規約 <small>TERMS OF SERVICE</small></a>
+          <a className={route.name === 'privacy' ? 'is-current' : undefined} href="/privacy" onClick={closeMenu} aria-current={route.name === 'privacy' ? 'page' : undefined}>プライバシー <small>PRIVACY POLICY</small></a>
         </div>
       </div>
-      <div className="nav-bottom"><LanguagePicker language={language} copy={copy} onChange={(next) => { onLanguageChange(next); closeMenu(); }} />
+
+      <div className="nav-bottom">
+        <LanguagePicker language={language} copy={copy} onChange={(next) => { onLanguageChange(next); closeMenu(); }} />
         <a className="nav-join" href={site.inviteUrl} target="_blank" rel="noreferrer" onClick={closeMenu}>Discordに参加 <b>↗</b></a>
       </div>
     </nav>
     {menuOpen && <button className="nav-scrim" aria-label="メニューを閉じる" onClick={closeMenu} type="button" />}
   </header>;
 }
-
 function Footer({ copy }: { copy: Copy }) {
   return <footer className="site-footer">
     <div className="footer-main">
