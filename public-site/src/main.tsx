@@ -39,7 +39,7 @@ function resolveRoute(pathname: string): Route {
   if (path === '/preview') return { name: 'preview' };
   if (path === '/iroha') return { name: 'iroha' };
   if (path === '/iroha/music') return { name: 'irohaMusic' };
-  if (path === '/iroha/streams') return { name: 'irohaStreams' };
+  if (path === '/iroha/streams' || path === '/iroha/stream') return { name: 'irohaStreams' };
   const articleMatch = path.match(/^\/news\/(.+)$/);
   if (articleMatch) {
     try { return { name: 'article', slug: decodeURIComponent(articleMatch[1]) }; }
