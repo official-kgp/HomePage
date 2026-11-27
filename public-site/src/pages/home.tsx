@@ -134,6 +134,24 @@ export function HomePage({ copy, language, inviteUrl }: HomePageProps) {
       </div>
     </section>
 
+ 
+    <section className="home-directory" id="directory">
+      <div className="home-directory-head" data-reveal="left">
+        <p className="eyebrow">QUICK ACCESS / PORTAL DIRECTORY</p>
+        <h2>知りたいことへ、<br /><em>まっすぐアクセス。</em></h2>
+        <p>初めての方も、いつものメンバーも。必要な情報をここから探せます。</p>
+      </div>
+      <div className="home-directory-grid">
+        <a className="directory-card directory-featured" href="/guide" data-reveal="right"><span className="directory-number">01 / START</span><b className="directory-symbol">↗</b><strong>はじめての方へ</strong><small>参加方法・最初にすること</small><i>GET STARTED</i></a>
+        <a className="directory-card directory-faq" href="/faq" data-reveal="left"><span className="directory-number">02 / HELP</span><b className="directory-symbol">?</b><strong>FAQ・よくある質問</strong><small>参加前の疑問を解決</small><i>QUICK ANSWERS</i></a>
+        <a className="directory-card directory-server" href="/server" data-reveal="right"><span className="directory-number">03 / EXPLORE</span><b className="directory-symbol">⌘</b><strong>サーバー紹介</strong><small>機能やチャンネルを知る</small><i>EXPLORE KGP</i></a>
+        <a className="directory-card directory-rules" href="/rule" data-reveal="left"><span className="directory-number">04 / SAFETY</span><b className="directory-symbol">✳</b><strong>コミュニティルール</strong><small>みんなで楽しむための約束</small><i>GUIDELINES</i></a>
+        <a className="directory-card directory-news" href="/news" data-reveal="right"><span className="directory-number">05 / UPDATES</span><b className="directory-symbol">⌁</b><strong>お知らせ・活動記録</strong><small>KGPの最新情報をチェック</small><i>NEWSROOM</i></a>
+        <a className="directory-card directory-contact" href="/contact" data-reveal="left"><span className="directory-number">06 / SUPPORT</span><b className="directory-symbol">✉</b><strong>お問い合わせ</strong><small>困ったとき・相談したいとき</small><i>CONTACT US</i></a>
+      </div>
+      <div className="directory-foot"><span>NEED A HAND?</span><p>迷ったら、まずは <a href="/faq">FAQ</a> または <a href="/guide">参加ガイド</a> をチェック。</p><span className="directory-cross">✳</span></div>
+    </section>
+
     <section className="portal-cta">
       <div className="cta-orb cta-orb-a" /><div className="cta-orb cta-orb-b" />
       <div className="portal-cta-content" data-reveal><p className="eyebrow">YOUR NEXT CONNECTION STARTS HERE</p><h2>「好き」が集まる場所へ。<br /><em>あなたも、いっしょに。</em></h2><p>何かを話したい日も、ただ眺めていたい日も。<br />KGPで、自分らしい居場所を見つけてみませんか？</p><a className="portal-button portal-button-light" href={inviteUrl} target="_blank" rel="noreferrer"><span>コミュニティに参加する</span><b>↗</b></a></div>
