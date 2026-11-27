@@ -18,6 +18,7 @@ import { ServerPage } from './pages/server';
 import { TermsPage } from './pages/terms';
 import RulePage from './pages/rule';
 import './styles.css';
+import './viewport-guard.css';
 
 type Route =
   | { name: 'home' } | { name: 'server' } | { name: 'guide' } | { name: 'faq' }
