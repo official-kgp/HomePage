@@ -133,7 +133,7 @@ function Header({ route, copy, language, onLanguageChange }: { route: Route; cop
       <div className="nav-mobile-heading"><span>EXPLORE KGP</span><small>FIND YOUR WAY</small></div>
       <a className={route.name === 'home' ? 'nav-link is-active' : 'nav-link'} href="/" onClick={closeMenu}><span className="nav-index">00</span>{copy.nav.home}</a>
       <div className="nav-group">
-        <button className={route.name === 'server' ? 'nav-group-trigger is-active' : 'nav-group-trigger'} type="button" aria-expanded={!!expanded.server} onClick={() => toggleGroup('server')}><span><i className="nav-index">01</i>サーバー</span><b className="nav-chevron">⌄</b></button>
+        <button className={route.name === 'server' ? 'nav-group-trigger is-active' : 'nav-group-trigger'} type="button" aria-expanded={!!expanded.server} onClick={() => toggleGroup('server')}><span><i className="nav-index">01</i>サーバー</span><b className="nav-chevron">›</b></button>
         <div className={expanded.server ? 'nav-submenu is-expanded' : 'nav-submenu'}>
           <a href="/server" onClick={closeMenu}>サーバー紹介 <small>ABOUT KGP</small></a>
           <a href="/guide" onClick={closeMenu}>参加ガイド <small>GETTING STARTED</small></a>
@@ -150,10 +150,17 @@ function Header({ route, copy, language, onLanguageChange }: { route: Route; cop
         </div>
       </div>
       <div className="nav-group">
-        <button className={activeCommunity ? 'nav-group-trigger is-active' : 'nav-group-trigger'} type="button" aria-expanded={!!expanded.community} onClick={() => toggleGroup('community')}><span><i className="nav-index">03</i>コミュニティ</span><b className="nav-chevron">⌄</b></button>
+        <button className={activeCommunity ? 'nav-group-trigger is-active' : 'nav-group-trigger'} type="button" aria-expanded={!!expanded.community} onClick={() => toggleGroup('community')}><span><i className="nav-index">03</i>コミュニティ</span><b className="nav-chevron">›</b></button>
         <div className={expanded.community ? 'nav-submenu is-expanded' : 'nav-submenu'}>
           <a href="/news" onClick={closeMenu}>お知らせ <small>NEWS & JOURNAL</small></a>
           <a href="/contact" onClick={closeMenu}>お問い合わせ <small>CONTACT</small></a>
+        </div>
+      </div>
+      <div className="nav-group">
+        <button className="nav-group-trigger" type="button" aria-expanded={!!expanded.legal} onClick={() => toggleGroup('legal')}><span><i className="nav-index">04</i>サイト情報</span><b className="nav-chevron">›</b></button>
+        <div className={expanded.legal ? 'nav-submenu is-expanded' : 'nav-submenu'}>
+          <a href="/terms" onClick={closeMenu}>利用規約 <small>TERMS OF SERVICE</small></a>
+          <a href="/privacy" onClick={closeMenu}>プライバシー <small>PRIVACY POLICY</small></a>
         </div>
       </div>
       <div className="nav-bottom"><LanguagePicker language={language} copy={copy} onChange={(next) => { onLanguageChange(next); closeMenu(); }} />
