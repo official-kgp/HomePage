@@ -73,19 +73,38 @@ function OpeningScreen() {
 
 function ScrollRevealObserver() {
   useEffect(() => {
-    const nodes = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]'));
-    if (!('IntersectionObserver' in window)) {
-      nodes.forEach((node) => node.classList.add('is-visible'));
-      return;
-    }
-    const observer = new IntersectionObserver((entries) => entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        observer.unobserve(entry.target);
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const observed = new WeakSet<Element>();
+    let observer: IntersectionObserver | null = null;
+    const reveal = (root: ParentNode) => {
+      const nodes = Array.from(root.querySelectorAll<HTMLElement>('[data-reveal]'));
+      if (reduced || !('IntersectionObserver' in window)) {
+        nodes.forEach((node) => node.classList.add('is-visible'));
+        return;
       }
-    }), { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-    nodes.forEach((node) => observer.observe(node));
-    return () => observer.disconnect();
+      if (!observer) {
+        observer = new IntersectionObserver((entries) => entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer?.unobserve(entry.target);
+          }
+        }), { threshold: 0.1, rootMargin: '0px 0px -36px 0px' });
+      }
+      nodes.forEach((node) => {
+        if (!observed.has(node)) {
+          observed.add(node);
+          observer?.observe(node);
+        }
+      });
+    };
+    reveal(document);
+    const mutation = new MutationObserver((records) => records.forEach((record) => {
+      record.addedNodes.forEach((node) => {
+        if (node instanceof HTMLElement) reveal(node);
+      });
+    }));
+    mutation.observe(document.getElementById('main-content') ?? document.body, { childList: true, subtree: true });
+    return () => { mutation.disconnect(); observer?.disconnect(); };
   }, []);
   return null;
 }
@@ -100,31 +119,48 @@ function LanguagePicker({ language, copy, onChange }: { language: Language; copy
 
 function Header({ route, copy, language, onLanguageChange }: { route: Route; copy: Copy; language: Language; onLanguageChange: (next: Language) => void }) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [menuClosing, setMenuClosing] = useState(false);
-  const links = [
-    { href: '/', label: copy.nav.home, active: route.name === 'home' },
-    { href: '/server', label: 'サーバー紹介', active: route.name === 'server' },
-    { href: '/iroha', label: '風真いろは', active: ['iroha', 'irohaMusic', 'irohaStreams'].includes(route.name) },
-    { href: '/guide', label: '参加ガイド', active: route.name === 'guide' },
-    { href: '/news', label: copy.nav.news, active: route.name === 'news' || route.name === 'article' },
-    { href: '/faq', label: 'FAQ', active: route.name === 'faq' },
-    { href: '/rule', label: 'ルール', active: route.name === 'rule' },
-    { href: '/contact', label: copy.nav.contact, active: route.name === 'contact' },
-  ];
-  const closeMenu = () => {
-    setMenuOpen(false);
-    setMenuClosing(true);
-    window.setTimeout(() => setMenuClosing(false), 550);
-  };
+  const [expanded, setExpanded] = useState<Record<string, boolean>>({ iroha: true });
+  const activeIroha = ['iroha', 'irohaMusic', 'irohaStreams'].includes(route.name);
+  const activeCommunity = ['guide', 'faq', 'rule', 'contact', 'news', 'article'].includes(route.name);
+  const toggleGroup = (key: string) => setExpanded((current) => ({ ...current, [key]: !current[key] }));
+  const closeMenu = () => setMenuOpen(false);
   return <header className="site-header">
-    <a className="brand" href="/" aria-label={copy.siteName}><img src="https://img.suiten.site/Image/kgp-logo.png" alt="" /><span>{copy.siteName}<small>OFFICIAL COMMUNITY</small></span></a>
-    <button className={menuOpen ? 'menu-toggle is-open' : menuClosing ? 'menu-toggle is-closing' : 'menu-toggle'} type="button"
+    <a className="brand" href="/" aria-label={copy.siteName} onClick={closeMenu}><img src="https://img.suiten.site/Image/kgp-logo.png" alt="" /><span>{copy.siteName}<small>OFFICIAL COMMUNITY / PORTAL</small></span></a>
+    <button className={menuOpen ? 'menu-toggle is-open' : 'menu-toggle'} type="button"
       aria-expanded={menuOpen} aria-controls="site-navigation" aria-label={menuOpen ? copy.common.menuClose : copy.common.menuOpen}
-      onClick={() => menuOpen ? closeMenu() : (setMenuClosing(false), setMenuOpen(true))}><span /><span /><span /></button>
+      onClick={() => setMenuOpen((open) => !open)}><span /><span /></button>
     <nav className={menuOpen ? 'site-navigation is-open' : 'site-navigation'} id="site-navigation" aria-label={copy.common.mainNavigation}>
-      {links.map((link) => <a className={link.active ? 'nav-link is-active' : 'nav-link'} href={link.href} key={link.href} onClick={() => setMenuOpen(false)}>{link.label}</a>)}
-      <LanguagePicker language={language} copy={copy} onChange={(next) => { onLanguageChange(next); setMenuOpen(false); }} />
+      <div className="nav-mobile-heading"><span>EXPLORE KGP</span><small>FIND YOUR WAY</small></div>
+      <a className={route.name === 'home' ? 'nav-link is-active' : 'nav-link'} href="/" onClick={closeMenu}><span className="nav-index">00</span>{copy.nav.home}</a>
+      <div className="nav-group">
+        <button className={route.name === 'server' ? 'nav-group-trigger is-active' : 'nav-group-trigger'} type="button" aria-expanded={!!expanded.server} onClick={() => toggleGroup('server')}><span><i className="nav-index">01</i>サーバー</span><b className="nav-chevron">⌄</b></button>
+        <div className={expanded.server ? 'nav-submenu is-expanded' : 'nav-submenu'}>
+          <a href="/server" onClick={closeMenu}>サーバー紹介 <small>ABOUT KGP</small></a>
+          <a href="/guide" onClick={closeMenu}>参加ガイド <small>GETTING STARTED</small></a>
+          <a href="/faq" onClick={closeMenu}>よくある質問 <small>FAQ</small></a>
+          <a href="/rule" onClick={closeMenu}>コミュニティルール <small>GUIDELINES</small></a>
+        </div>
+      </div>
+      <div className="nav-group">
+        <button className={activeIroha ? 'nav-group-trigger is-active' : 'nav-group-trigger'} type="button" aria-expanded={!!expanded.iroha} onClick={() => toggleGroup('iroha')}><span><i className="nav-index">02</i>風真いろは</span><b className="nav-chevron">⌄</b></button>
+        <div className={expanded.iroha ? 'nav-submenu is-expanded' : 'nav-submenu'}>
+          <a href="/iroha" onClick={closeMenu}>プロフィール <small>PROFILE</small></a>
+          <a href="/iroha/streams" onClick={closeMenu}>Video <small>STREAMS & ARCHIVES</small></a>
+          <a href="/iroha/music" onClick={closeMenu}>Music <small>OFFICIAL RELEASES</small></a>
+        </div>
+      </div>
+      <div className="nav-group">
+        <button className={activeCommunity ? 'nav-group-trigger is-active' : 'nav-group-trigger'} type="button" aria-expanded={!!expanded.community} onClick={() => toggleGroup('community')}><span><i className="nav-index">03</i>コミュニティ</span><b className="nav-chevron">⌄</b></button>
+        <div className={expanded.community ? 'nav-submenu is-expanded' : 'nav-submenu'}>
+          <a href="/news" onClick={closeMenu}>お知らせ <small>NEWS & JOURNAL</small></a>
+          <a href="/contact" onClick={closeMenu}>お問い合わせ <small>CONTACT</small></a>
+        </div>
+      </div>
+      <div className="nav-bottom"><LanguagePicker language={language} copy={copy} onChange={(next) => { onLanguageChange(next); closeMenu(); }} />
+        <a className="nav-join" href={site.inviteUrl} target="_blank" rel="noreferrer" onClick={closeMenu}>Discordに参加 <b>↗</b></a>
+      </div>
     </nav>
+    {menuOpen && <button className="nav-scrim" aria-label="メニューを閉じる" onClick={closeMenu} type="button" />}
   </header>;
 }
 
