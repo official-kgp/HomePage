@@ -6,6 +6,9 @@ export interface Env {
   PUBLIC_DISCORD_CLIENT_SECRET: string;
   PUBLIC_DISCORD_REDIRECT_URI: string;
   SESSION_SECRET: string;
+  RESEND_API_KEY: string;
+  RESEND_FROM_EMAIL: string;
+  CONTACT_TO_EMAIL: string;
 }
 
 function allowedOrigin(request: Request, env: Env): string {
@@ -75,6 +78,78 @@ export default {
     }
 
     if (url.pathname === "/health") return json({ ok: true }, 200, origin);
+
+    // Public contact form: keep the Resend API key exclusively in Worker secrets.
+    if (url.pathname === "/v1/contact") {
+      if (request.method !== "POST") {
+        return json({ error: "method_not_allowed" }, 405, origin);
+      }
+      if (request.headers.get("Origin") !== env.ALLOWED_ORIGIN) {
+        return json({ error: "origin_not_allowed" }, 403, origin);
+      }
+      const contentLength = Number(request.headers.get("Content-Length") || 0);
+      if (contentLength > 12_000) return json({ error: "payload_too_large" }, 413, origin);
+
+      let body: any;
+      try {
+        const raw = await request.text();
+        if (new TextEncoder().encode(raw).byteLength > 12_000) {
+          return json({ error: "payload_too_large" }, 413, origin);
+        }
+        body = JSON.parse(raw);
+      } catch {
+        return json({ error: "invalid_json" }, 400, origin);
+      }
+
+      // Honeypot: silently accept bot submissions without sending email.
+      if (cleanText(body.website, 200)) return json({ ok: true }, 200, origin);
+
+      const name = cleanText(body.name, 80).replace(/[\\r\\n]+/g, " ");
+      const email = cleanText(body.email, 254);
+      const message = cleanText(body.message, 5000);
+      if (!name || !email || !message || body.consent !== true) {
+        return json({ error: "required_fields_missing" }, 400, origin);
+      }
+      if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)) {
+        return json({ error: "invalid_email" }, 400, origin);
+      }
+      if (!env.RESEND_API_KEY || !env.RESEND_FROM_EMAIL || !env.CONTACT_TO_EMAIL) {
+        return json({ error: "mail_service_not_configured" }, 503, origin);
+      }
+
+      const resendResponse = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${env.RESEND_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          from: env.RESEND_FROM_EMAIL,
+          to: [env.CONTACT_TO_EMAIL],
+          reply_to: email,
+          subject: `[KGPお問い合わせ] ${name}`,
+          text: [
+            "KGP公式サイトのお問い合わせフォームから送信されました。",
+            "",
+            `お名前: ${name}`,
+            `メールアドレス: ${email}`,
+            "",
+            "お問い合わせ内容:",
+            message,
+          ].join("\\n"),
+        }),
+      });
+
+      if (!resendResponse.ok) {
+        // Do not return provider details or submitted personal data to the browser.
+        console.error("Resend email request failed:", resendResponse.status);
+        return json({ error: "mail_delivery_failed" }, 502, origin);
+      }
+
+      const result: any = await resendResponse.json();
+      return json({ ok: true, id: result.id }, 200, origin);
+    }
+
 
     if (url.pathname === "/oauth/discord/start" && request.method === "GET") {
       const state = crypto.randomUUID();
