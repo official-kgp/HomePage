@@ -88,7 +88,7 @@ npm run build
 
 お問い合わせフォームは公開HPから `POST https://kgp-api.suiten.site/v1/contact` へJSONを送信し、Cloudflare WorkerがResend Email API（`https://api.resend.com/emails`）を呼び出します。Resend APIキーはブラウザへ渡しません。
 
-開発時は `api/.dev.vars` に `RESEND_API_KEY` を設定します（`api/.dev.vars.example` を参照）。本番では次のコマンドでWorker Secretへ登録します。
+開発時は `api/.env.example` を `api/.dev.vars` にコピーし、`RESEND_API_KEY` などを設定します（`.dev.vars` はGitへコミットしないでください）。本番では次のコマンドでWorker Secretへ登録します。
 
 ```bash
 cd api
