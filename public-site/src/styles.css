@@ -1223,3 +1223,40 @@ body {
     transition: none !important;
   }
 }
+
+
+/* Contact form submission feedback and invisible spam honeypot. */
+.contact-form-portal .contact-honeypot {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+.contact-form-portal button:disabled {
+  cursor: wait;
+  opacity: .65;
+  transform: none;
+}
+.contact-form-status {
+  margin: 14px 0 0;
+  padding: 13px 15px;
+  border: 1px solid #dce5f2;
+  border-radius: 12px;
+  font-size: 12px;
+  line-height: 1.8;
+}
+.contact-form-status.is-success {
+  border-color: #b8e4d2;
+  background: #effaf5;
+  color: #286c55;
+}
+.contact-form-status.is-error {
+  border-color: #f0c8ce;
+  background: #fff4f5;
+  color: #a34255;
+}
