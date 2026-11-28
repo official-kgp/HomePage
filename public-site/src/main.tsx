@@ -257,7 +257,7 @@ function App() {
       case 'faq': return <FaqPage />;
       case 'news': return <NewsPage copy={copy} language={language} />;
       case 'article': return <ArticlePage copy={copy} language={language} slug={route.slug} />;
-      case 'contact': return <ContactPage copy={copy} contactEmail={site.contact} />;
+      case 'contact': return <ContactPage copy={copy} contactEmail={site.contact} apiUrl={site.contactApi} />;
       case 'rule': return <RulePage />;
       case 'terms': return <TermsPage />;
       case 'privacy': return <PrivacyPage />;
