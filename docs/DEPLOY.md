@@ -9,6 +9,7 @@ cd api
 npx wrangler d1 create kgp-news
 npx wrangler d1 execute kgp-news --remote --file=../database/schema.sql
 npx wrangler secret put ADMIN_API_KEY
+npx wrangler secret put RESEND_API_KEY
 npx wrangler deploy
 ```
 
@@ -20,6 +21,7 @@ API用のCustom Domainは `kgp-api.suiten.site` です。`api.kgp.suiten.site` �
 
 ```env
 VITE_NEWS_API=https://kgp-api.suiten.site
+VITE_CONTACT_API=https://kgp-api.suiten.site/v1/contact
 VITE_DISCORD_INVITE_URL=https://discord.gg/vykYySsdQe
 ```
 
@@ -80,3 +82,22 @@ npm run build
 管理画面からタイトル、カテゴリ、概要、画像URL、本文、公開日時、公開/下書きを編集できます。保存後、公開HPの `/news` とトップページがAPIから最新ニュースを取得します。
 
 現行APIにはD1とWorkerをデプロイ済みです。管理画面から更新する場合は、Workerの `ADMIN_API_KEY` Secretと、`kgp-admin` の `KGP_ADMIN_API_KEY` を同じ値に設定してください。
+
+
+## 7. お問い合わせフォーム（Resend）
+
+お問い合わせフォームは公開HPから `POST https://kgp-api.suiten.site/v1/contact` へJSONを送信し、Cloudflare WorkerがResend Email API（`https://api.resend.com/emails`）を呼び出します。Resend APIキーはブラウザへ渡しません。
+
+開発時は `api/.dev.vars` に `RESEND_API_KEY` を設定します（`api/.dev.vars.example` を参照）。本番では次のコマンドでWorker Secretへ登録します。
+
+```bash
+cd api
+npx wrangler secret put RESEND_API_KEY
+npx wrangler deploy
+```
+
+送信元・送信先は `api/wrangler.toml` の `RESEND_FROM_EMAIL` / `CONTACT_TO_EMAIL` で設定します。送信元ドメインはResend側で認証済みである必要があります。実際に利用する送信元アドレスに合わせて設定してください。
+
+公開側の `public-site/.env.example` にはAPIエンドポイントの `VITE_CONTACT_API` のみを記載します。`RESEND_API_KEY` は `VITE_` 変数にしてはいけません。
+
+お問い合わせAPIには入力検証、Origin確認、文字数・本文サイズ制限、ハニーポットを実装しています。本番公開前にCloudflare側でも `/v1/contact` にレート制限ルールを設定してください。
