@@ -1,3 +1,4 @@
 ADMIN_API_KEY=replace-me
 PUBLIC_DISCORD_CLIENT_SECRET=replace-me
 SESSION_SECRET=replace-with-a-long-random-value
+RESEND_API_KEY=re_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
