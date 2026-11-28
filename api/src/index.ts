@@ -101,44 +101,54 @@ export default {
         return json({ error: "invalid_json" }, 400, origin);
       }
 
+      if (!body || typeof body !== "object" || Array.isArray(body)) {
+        return json({ error: "invalid_payload" }, 400, origin);
+      }
+
       // Honeypot: silently accept bot submissions without sending email.
       if (cleanText(body.website, 200)) return json({ ok: true }, 200, origin);
 
-      const name = cleanText(body.name, 80).replace(/[\\r\\n]+/g, " ");
+      const name = cleanText(body.name, 80).replace(/[\r\n]+/g, " ");
       const email = cleanText(body.email, 254);
       const message = cleanText(body.message, 5000);
       if (!name || !email || !message || body.consent !== true) {
         return json({ error: "required_fields_missing" }, 400, origin);
       }
-      if (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)) {
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         return json({ error: "invalid_email" }, 400, origin);
       }
       if (!env.RESEND_API_KEY || !env.RESEND_FROM_EMAIL || !env.CONTACT_TO_EMAIL) {
         return json({ error: "mail_service_not_configured" }, 503, origin);
       }
 
-      const resendResponse = await fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${env.RESEND_API_KEY}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          from: env.RESEND_FROM_EMAIL,
-          to: [env.CONTACT_TO_EMAIL],
-          reply_to: email,
-          subject: `[KGPお問い合わせ] ${name}`,
-          text: [
-            "KGP公式サイトのお問い合わせフォームから送信されました。",
-            "",
-            `お名前: ${name}`,
-            `メールアドレス: ${email}`,
-            "",
-            "お問い合わせ内容:",
-            message,
-          ].join("\\n"),
-        }),
-      });
+      let resendResponse: Response;
+      try {
+        resendResponse = await fetch("https://api.resend.com/emails", {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${env.RESEND_API_KEY}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            from: env.RESEND_FROM_EMAIL,
+            to: [env.CONTACT_TO_EMAIL],
+            reply_to: email,
+            subject: `[KGPお問い合わせ] ${name}`,
+            text: [
+              "KGP公式サイトのお問い合わせフォームから送信されました。",
+              "",
+              `お名前: ${name}`,
+              `メールアドレス: ${email}`,
+              "",
+              "お問い合わせ内容:",
+              message,
+            ].join("\n"),
+          }),
+        });
+      } catch {
+        console.error("Resend email request failed: network error");
+        return json({ error: "mail_delivery_failed" }, 502, origin);
+      }
 
       if (!resendResponse.ok) {
         // Do not return provider details or submitted personal data to the browser.
